@@ -5,7 +5,7 @@
 >
     <testsuites>
         <testsuite name="all">
-            <file>ut/CommandRunnerTest.php</file>
+            <file>ut/BackgroundWorkerManagerTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

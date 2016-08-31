@@ -1,5 +1,5 @@
 <?php
-use Oasis\Mlib\Multitasking\CommandRunner;
+use Oasis\Mlib\Multitasking\BackgroundWorkerManager;
 use Oasis\Mlib\Multitasking\WorkerInfo;
 
 /**
@@ -8,14 +8,14 @@ use Oasis\Mlib\Multitasking\WorkerInfo;
  * Date: 2016-08-30
  * Time: 15:23
  */
-class CommandRunnerTest extends PHPUnit_Framework_TestCase
+class BackgroundWorkerManagerTest extends PHPUnit_Framework_TestCase
 {
     public function testNormalRun()
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'multitasking-ut-');
         mdebug("Temp file: %s", $tempFile);
         
-        $runner  = new CommandRunner();
+        $runner  = new BackgroundWorkerManager();
         $started = $runner->run();
         self::assertEquals(0, $started);
         $runner->addWorker(
@@ -42,7 +42,7 @@ class CommandRunnerTest extends PHPUnit_Framework_TestCase
             $files[$i] = tempnam(sys_get_temp_dir(), 'multitasking-ut-');
         }
         
-        $runner = new CommandRunner();
+        $runner = new BackgroundWorkerManager();
         $runner->setNumberOfConcurrentWorkers($size);
         $runner->addWorker(
             function (WorkerInfo $info) use ($files) {

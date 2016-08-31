@@ -8,7 +8,7 @@
 
 namespace Oasis\Mlib\Multitasking;
 
-class CommandRunner
+class BackgroundWorkerManager
 {
     protected $parentProcessId = 0;
     /** @var  int */
