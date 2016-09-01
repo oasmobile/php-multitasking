@@ -2,11 +2,13 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.1/phpunit.xsd"
         bootstrap="ut/bootstrap.php"
+        enforceTimeLimit="true"
 >
     <testsuites>
         <testsuite name="all">
             <file>ut/BackgroundWorkerManagerTest.php</file>
             <file>ut/SemaphoreTest.php</file>
+            <file>ut/MessageQueueTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

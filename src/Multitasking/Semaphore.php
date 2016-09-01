@@ -73,7 +73,6 @@ class Semaphore
         mdebug("Removing semaphore for key: %x", $this->key);
         sem_remove($this->sem);
         $this->sem = null;
-        $this->key = '';
     }
     
     /**
