@@ -9,6 +9,7 @@
             <file>ut/BackgroundWorkerManagerTest.php</file>
             <file>ut/SemaphoreTest.php</file>
             <file>ut/MessageQueueTest.php</file>
+            <file>ut/SharedMemoryTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
