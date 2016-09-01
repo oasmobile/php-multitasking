@@ -6,6 +6,7 @@
     <testsuites>
         <testsuite name="all">
             <file>ut/BackgroundWorkerManagerTest.php</file>
+            <file>ut/SemaphoreTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
