@@ -107,10 +107,12 @@ class MessageQueue
                     minfo("Queue is empty, no message of desired type %d, errno = %d", $expectedType, $errorCode);
                 }
                 else {
-                    merror(
-                        "Error receiving msg, error code = %d, description = %s",
-                        $errorCode,
-                        posix_strerror($errorCode)
+                    throw new \RuntimeException(
+                        sprintf(
+                            "Error receiving msg, error code = %d, description = %s",
+                            $errorCode,
+                            posix_strerror($errorCode)
+                        )
                     );
                 }
             }
