@@ -103,11 +103,16 @@ class MessageQueue
                 $errorCode
             ))
             ) {
-                merror(
-                    "Error receiving msg, error code = %d, description = %s",
-                    $errorCode,
-                    posix_strerror($errorCode)
-                );
+                if (MSG_ENOMSG == $errorCode) {
+                    minfo("Queue is empty, no message of desired type %d, errno = %d", $expectedType, $errorCode);
+                }
+                else {
+                    merror(
+                        "Error receiving msg, error code = %d, description = %s",
+                        $errorCode,
+                        posix_strerror($errorCode)
+                    );
+                }
             }
         } finally {
             $this->sem->release();
