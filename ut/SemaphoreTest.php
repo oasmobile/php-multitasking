@@ -72,4 +72,34 @@ class SemaphoreTest extends PHPUnit_Framework_TestCase
         
         self::assertEquals('abcdef', file_get_contents($tempFile));
     }
+    
+    public function testNonBlockingMode()
+    {
+        $sem      = new Semaphore('');
+        $tempFile = tempnam(sys_get_temp_dir(), 'semaphore-ut-');
+        
+        $worker1 = function () use ($sem, $tempFile) {
+            $sem->acquire();
+            file_put_contents($tempFile, 'abc', FILE_APPEND);
+            usleep(1000000);
+            file_put_contents($tempFile, 'ghi', FILE_APPEND);
+            $sem->release();
+        };
+        $worker2 = function () use ($sem, $tempFile) {
+            usleep(500000);
+            $ret = $sem->acquire(true);
+            file_put_contents($tempFile, $ret ? 'def' : 'fed', FILE_APPEND);
+            //$sem->release();
+        };
+        
+        $man = new BackgroundWorkerManager(2);
+        $man->addWorker($worker1);
+        $man->addWorker($worker2);
+        $man->run();
+        $man->wait();
+        
+        $sem->remove();
+        
+        self::assertEquals('abcfedghi', file_get_contents($tempFile));
+    }
 }

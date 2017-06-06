@@ -33,16 +33,22 @@ class Semaphore
     {
     }
     
-    public function acquire()
+    public function acquire($nowait = false)
     {
         if (!$this->sem) {
             $this->initialize();
         }
         
         mdebug("Acquiring semaphore for %x", $this->key);
-        sem_acquire($this->sem);
+        // disable warning because phpstorm does not have latest change for php5.6.1
+        // https://bugs.php.net/bug.php?id=67990
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
+        $ret = sem_acquire($this->sem, $nowait);
+        if ($ret) {
+            mdebug("Acquired");
+        }
         
-        mdebug("Acquired");
+        return $ret;
     }
     
     public function initialize()
