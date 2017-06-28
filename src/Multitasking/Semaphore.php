@@ -39,13 +39,13 @@ class Semaphore
             $this->initialize();
         }
         
-        mdebug("Acquiring semaphore for %x", $this->key);
+        $this->debug("Acquiring semaphore for %s, key = %x", $this->id, $this->key);
         // disable warning because phpstorm does not have latest change for php5.6.1
         // https://bugs.php.net/bug.php?id=67990
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         $ret = sem_acquire($this->sem, $nowait);
         if ($ret) {
-            mdebug("Acquired");
+            $this->debug("Acquired");
         }
         
         return $ret;
@@ -53,7 +53,7 @@ class Semaphore
     
     public function initialize()
     {
-        mdebug("Initializing semaphore with key: %x", $this->key);
+        $this->debug("Initializing semaphore %s with key: %x", $this->id, $this->key);
         $this->sem = sem_get($this->key, $this->maxAcquire, 0666, 1);
     }
     
@@ -65,9 +65,9 @@ class Semaphore
             return;
         }
         
-        mdebug("Releasing semaphore for %x", $this->key);
+        $this->debug("Releasing semaphore for %s, key = %x", $this->id, $this->key);
         sem_release($this->sem);
-        mdebug("Released");
+        $this->debug("Released");
     }
     
     public function remove()
@@ -76,16 +76,30 @@ class Semaphore
             $this->initialize();
         }
         
-        mdebug("Removing semaphore for key: %x", $this->key);
+        $this->debug("Removing semaphore for %s, key: %x", $this->id, $this->key);
         sem_remove($this->sem);
         $this->sem = null;
     }
     
     /**
-     * @return a|string
+     * @return string
      */
     public function getId()
     {
         return $this->id;
+    }
+    
+    private function debug(...$args)
+    {
+        static $logDebug = null;
+        if ($logDebug === null && \getenv('DEBUG_OASIS_MULTITASKING')) {
+            $logDebug = true;
+        }
+        else {
+            $logDebug = false;
+        }
+        if ($logDebug) {
+            \call_user_func_array("mdebug", $args);
+        }
     }
 }
