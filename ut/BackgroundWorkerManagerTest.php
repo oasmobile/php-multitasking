@@ -1,4 +1,5 @@
 <?php
+use Oasis\Mlib\Event\Event;
 use Oasis\Mlib\Multitasking\BackgroundWorkerManager;
 use Oasis\Mlib\Multitasking\WorkerInfo;
 
@@ -46,8 +47,8 @@ class BackgroundWorkerManagerTest extends PHPUnit_Framework_TestCase
         $runner->setNumberOfConcurrentWorkers($size);
         $runner->addWorker(
             function (WorkerInfo $info) use ($files) {
-                mdebug("Writing to %s with %s", $files[$info->currentWorkerIndex], $info->currentWorkerIndex);
-                file_put_contents($files[$info->currentWorkerIndex], $info->currentWorkerIndex);
+                mdebug("Writing to %s with %s", $files[$info->getCurrentWorkerIndex()], $info->getCurrentWorkerIndex());
+                file_put_contents($files[$info->getCurrentWorkerIndex()], $info->getCurrentWorkerIndex());
             },
             $num
         );
@@ -59,5 +60,28 @@ class BackgroundWorkerManagerTest extends PHPUnit_Framework_TestCase
             mdebug("Checking file: %s", $files[$i]);
             self::assertEquals($i, file_get_contents($files[$i]));
         }
+    }
+    
+    public function testEventDispatchedByFinishedWorker()
+    {
+        $runner = new BackgroundWorkerManager();
+        $ids    = $runner->addWorker(
+            function () {
+                return true;
+            },
+            10
+        );
+        $runner->setNumberOfConcurrentWorkers(1);
+        $runner->addEventListener(
+            BackgroundWorkerManager::EVENT_WORKER_FINISHED,
+            function (Event $event) use (&$ids) {
+                $id = array_shift($ids);
+                /** @var WorkerInfo $info */
+                $info = $event->getContext();
+                $this->assertEquals($id, $info->getId());
+            }
+        );
+        $runner->run();
+        $runner->wait();
     }
 }

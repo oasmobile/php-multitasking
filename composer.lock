@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "15658fd73450456cc51170262d4f2859",
+    "content-hash": "bc64c959294e58b3225cc5b0edc24a2e",
     "packages": [
         {
             "name": "bramus/ansi-php",
@@ -207,6 +207,42 @@
                 "psr-3"
             ],
             "time": "2017-03-13T07:08:03+00:00"
+        },
+        {
+            "name": "oasis/event",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oasmobile/php-event.git",
+                "reference": "67f42b00383cfbfc3b1eae495e4eed041a42634f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oasmobile/php-event/zipball/67f42b00383cfbfc3b1eae495e4eed041a42634f",
+                "reference": "67f42b00383cfbfc3b1eae495e4eed041a42634f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Oasis\\Mlib\\Event\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Minhao Zhang",
+                    "email": "minhao.zhang@qq.com"
+                }
+            ],
+            "description": "Event dispatching helpers",
+            "time": "2017-01-23T09:27:02+00:00"
         },
         {
             "name": "oasis/logging",

@@ -8,13 +8,21 @@
 
 namespace Oasis\Mlib\Multitasking;
 
-class BackgroundWorkerManager
+use Oasis\Mlib\Event\EventDispatcherInterface;
+use Oasis\Mlib\Event\EventDispatcherTrait;
+
+class BackgroundWorkerManager implements EventDispatcherInterface
 {
+    use EventDispatcherTrait;
+    
+    const EVENT_WORKER_FINISHED = 'worker_finished';
+    
     protected $parentProcessId = 0;
     /** @var  int */
     protected $numberOfConcurrentWorkers;
-    /** @var callable[] */
-    protected $workers            = [];
+    /** @var WorkerInfo[] */
+    protected $pendingWorkers = [];
+    /** @var WorkerInfo[] */
     protected $runningProcesses   = [];
     protected $startedWorkerCount = 0;
     protected $totalWorkerCount   = 0;
@@ -26,11 +34,23 @@ class BackgroundWorkerManager
         $this->parentProcessId = getmypid();
     }
     
+    /**
+     * @param callable $worker
+     * @param int      $count
+     *
+     * @return array ID:s of added worker. Those ID:s can be used to match against worker finished event dispatched by
+     *               the manager.
+     */
     public function addWorker(callable $worker, $count = 1)
     {
+        $ret = [];
         for ($i = 0; $i < $count; ++$i) {
-            $this->workers[] = $worker;
+            $info                   = new WorkerInfo($worker);
+            $this->pendingWorkers[] = $info;
+            $ret[]                  = $info->getId();
         }
+        
+        return $ret;
     }
     
     public function run()
@@ -47,7 +67,7 @@ class BackgroundWorkerManager
             return 0;
         }
         
-        $this->totalWorkerCount   = count($this->workers);
+        $this->totalWorkerCount   = count($this->pendingWorkers);
         $this->startedWorkerCount = 0;
         while ($this->hasMoreWork()) {
             $this->executeWorker();
@@ -73,8 +93,16 @@ class BackgroundWorkerManager
                 // child process with pid = $pid exits
                 $exitStatus = pcntl_wexitstatus($status);
                 mnotice("Process #%d has quit with code %d", $pid, $exitStatus);
+                $info = $this->runningProcesses[$pid] ?? null;
                 
-                unset($this->runningProcesses[$pid]);
+                if (!$info) {
+                    \merror("A pid not managed is encountered! pid = %s", $pid);
+                }
+                else {
+                    unset($this->runningProcesses[$pid]);
+                    $info->setExitStatus($exitStatus);
+                    $this->dispatch(self::EVENT_WORKER_FINISHED, $info);
+                }
                 
                 if ($this->hasMoreWork()) {
                     $this->executeWorker();
@@ -99,7 +127,7 @@ class BackgroundWorkerManager
     public function hasMoreWork()
     {
         return count($this->runningProcesses) < $this->numberOfConcurrentWorkers
-               && count($this->workers) > 0;
+               && count($this->pendingWorkers) > 0;
     }
     
     /**
@@ -122,12 +150,12 @@ class BackgroundWorkerManager
     {
         $this->assertInParentProcess();
         
-        $worker = array_shift($this->workers);
-        
-        $info                            = new WorkerInfo();
-        $info->totalWorkers              = $this->totalWorkerCount;
-        $info->currentWorkerIndex        = $this->startedWorkerCount;
-        $info->numberOfConcurrentWorkers = $this->numberOfConcurrentWorkers;
+        /** @var WorkerInfo $info */
+        $info = array_shift($this->pendingWorkers);
+        $info->setTotalWorkers($this->totalWorkerCount);
+        $info->setCurrentWorkerIndex($this->startedWorkerCount);
+        $info->setNumberOfConcurrentWorkers($this->numberOfConcurrentWorkers);
+        $worker = $info->getWorker();
         
         $pid = pcntl_fork();
         if ($pid < 0) {
@@ -143,7 +171,7 @@ class BackgroundWorkerManager
         }
         else {
             // in parent
-            $this->runningProcesses[$pid] = true;
+            $this->runningProcesses[$pid] = $info;
             $this->startedWorkerCount++;
         }
     }
