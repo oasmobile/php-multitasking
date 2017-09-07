@@ -16,6 +16,7 @@ class BackgroundWorkerManager implements EventDispatcherInterface
     use EventDispatcherTrait;
     
     const EVENT_WORKER_FINISHED = 'worker_finished';
+    const EVENT_ALL_COMPLETED   = 'all_completed';
     
     protected $parentProcessId = 0;
     /** @var  int */
@@ -23,7 +24,11 @@ class BackgroundWorkerManager implements EventDispatcherInterface
     /** @var WorkerInfo[] */
     protected $pendingWorkers = [];
     /** @var WorkerInfo[] */
-    protected $runningProcesses   = [];
+    protected $runningProcesses = [];
+    /** @var WorkerInfo[] */
+    protected $successfulProcesses = [];
+    /** @var WorkerInfo[] */
+    protected $failedProcesses    = [];
     protected $startedWorkerCount = 0;
     protected $totalWorkerCount   = 0;
     
@@ -53,6 +58,9 @@ class BackgroundWorkerManager implements EventDispatcherInterface
         return $ret;
     }
     
+    /**
+     * @return int num of started workers (always <= num-of-concurrent-workers)
+     */
     public function run()
     {
         $this->assertInParentProcess();
@@ -67,8 +75,10 @@ class BackgroundWorkerManager implements EventDispatcherInterface
             return 0;
         }
         
-        $this->totalWorkerCount   = count($this->pendingWorkers);
-        $this->startedWorkerCount = 0;
+        $this->successfulProcesses = [];
+        $this->failedProcesses     = [];
+        $this->totalWorkerCount    = count($this->pendingWorkers);
+        $this->startedWorkerCount  = 0;
         while ($this->hasMoreWork()) {
             $this->executeWorker();
         }
@@ -76,6 +86,11 @@ class BackgroundWorkerManager implements EventDispatcherInterface
         return $this->startedWorkerCount;
     }
     
+    /**
+     * Wait for all workers to finish
+     *
+     * @return int num of failed workers
+     */
     public function wait()
     {
         $this->assertInParentProcess();
@@ -102,6 +117,13 @@ class BackgroundWorkerManager implements EventDispatcherInterface
                     unset($this->runningProcesses[$pid]);
                     $info->setExitStatus($exitStatus);
                     $this->dispatch(self::EVENT_WORKER_FINISHED, $info);
+                    
+                    if ($exitStatus == 0) {
+                        $this->successfulProcesses[$info->getId()] = $info;
+                    }
+                    else {
+                        $this->failedProcesses[$info->getId()] = $info;
+                    }
                 }
                 
                 if ($this->hasMoreWork()) {
@@ -122,6 +144,10 @@ class BackgroundWorkerManager implements EventDispatcherInterface
                 }
             }
         }
+        
+        $this->dispatch(new WorkerManagerCompletedEvent($this->successfulProcesses, $this->failedProcesses));
+        
+        return count($this->failedProcesses);
     }
     
     public function hasMoreWork()

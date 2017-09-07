@@ -2,6 +2,7 @@
 use Oasis\Mlib\Event\Event;
 use Oasis\Mlib\Multitasking\BackgroundWorkerManager;
 use Oasis\Mlib\Multitasking\WorkerInfo;
+use Oasis\Mlib\Multitasking\WorkerManagerCompletedEvent;
 
 /**
  * Created by PhpStorm.
@@ -71,6 +72,12 @@ class BackgroundWorkerManagerTest extends PHPUnit_Framework_TestCase
             },
             10
         );
+        list($failedId) = $runner->addWorker(
+            function () {
+                die(111);
+            }
+        );
+        $ids[] = $failedId;
         $runner->setNumberOfConcurrentWorkers(1);
         $runner->addEventListener(
             BackgroundWorkerManager::EVENT_WORKER_FINISHED,
@@ -79,6 +86,15 @@ class BackgroundWorkerManagerTest extends PHPUnit_Framework_TestCase
                 /** @var WorkerInfo $info */
                 $info = $event->getContext();
                 $this->assertEquals($id, $info->getId());
+            }
+        );
+        $runner->addEventListener(
+            BackgroundWorkerManager::EVENT_ALL_COMPLETED,
+            function (WorkerManagerCompletedEvent $event) use ($failedId) {
+                $this->assertFalse($event->isSuccessful());
+                $this->assertEquals(10, count($event->getSuccessfulWorkers()));
+                $this->assertEquals(1, count($event->getFailedWorkers()));
+                $this->assertArrayHasKey($failedId, $event->getFailedWorkers());
             }
         );
         $runner->run();
