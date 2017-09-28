@@ -108,7 +108,7 @@ class BackgroundWorkerManager implements EventDispatcherInterface
                 // child process with pid = $pid exits
                 $exitStatus = pcntl_wexitstatus($status);
                 mnotice("Process #%d has quit with code %d", $pid, $exitStatus);
-                $info = $this->runningProcesses[$pid] ?? null;
+                $info = isset($this->runningProcesses[$pid]) ? $this->runningProcesses[$pid] : null;
                 
                 if (!$info) {
                     \merror("A pid not managed is encountered! pid = %s", $pid);

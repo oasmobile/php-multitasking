@@ -37,7 +37,7 @@ class WorkerManagerCompletedEvent extends Event
     /**
      * @return WorkerInfo[]
      */
-    public function getFailedWorkers(): array
+    public function getFailedWorkers()
     {
         return $this->failedWorkers;
     }
@@ -45,7 +45,7 @@ class WorkerManagerCompletedEvent extends Event
     /**
      * @return WorkerInfo[]
      */
-    public function getSuccessfulWorkers(): array
+    public function getSuccessfulWorkers()
     {
         return $this->successfulWorkers;
     }

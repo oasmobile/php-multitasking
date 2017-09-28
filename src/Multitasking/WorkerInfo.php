@@ -32,7 +32,7 @@ class WorkerInfo
     /**
      * @return int
      */
-    public function getCurrentWorkerIndex(): int
+    public function getCurrentWorkerIndex()
     {
         return $this->currentWorkerIndex;
     }
@@ -40,7 +40,7 @@ class WorkerInfo
     /**
      * @param int $currentWorkerIndex
      */
-    public function setCurrentWorkerIndex(int $currentWorkerIndex)
+    public function setCurrentWorkerIndex($currentWorkerIndex)
     {
         $this->currentWorkerIndex = $currentWorkerIndex;
     }
@@ -48,7 +48,7 @@ class WorkerInfo
     /**
      * @return int
      */
-    public function getExitStatus(): int
+    public function getExitStatus()
     {
         return $this->exitStatus;
     }
@@ -56,7 +56,7 @@ class WorkerInfo
     /**
      * @param int $exitStatus
      */
-    public function setExitStatus(int $exitStatus)
+    public function setExitStatus( $exitStatus)
     {
         $this->exitStatus = $exitStatus;
     }
@@ -64,7 +64,7 @@ class WorkerInfo
     /**
      * @return string
      */
-    public function getId(): string
+    public function getId()
     {
         return $this->id;
     }
@@ -72,7 +72,7 @@ class WorkerInfo
     /**
      * @return int
      */
-    public function getNumberOfConcurrentWorkers(): int
+    public function getNumberOfConcurrentWorkers()
     {
         return $this->numberOfConcurrentWorkers;
     }
@@ -80,7 +80,7 @@ class WorkerInfo
     /**
      * @param int $numberOfConcurrentWorkers
      */
-    public function setNumberOfConcurrentWorkers(int $numberOfConcurrentWorkers)
+    public function setNumberOfConcurrentWorkers( $numberOfConcurrentWorkers)
     {
         $this->numberOfConcurrentWorkers = $numberOfConcurrentWorkers;
     }
@@ -88,7 +88,7 @@ class WorkerInfo
     /**
      * @return int
      */
-    public function getTotalWorkers(): int
+    public function getTotalWorkers()
     {
         return $this->totalWorkers;
     }
@@ -96,7 +96,7 @@ class WorkerInfo
     /**
      * @param int $totalWorkers
      */
-    public function setTotalWorkers(int $totalWorkers)
+    public function setTotalWorkers( $totalWorkers)
     {
         $this->totalWorkers = $totalWorkers;
     }
@@ -104,7 +104,7 @@ class WorkerInfo
     /**
      * @return callable
      */
-    public function getWorker(): callable
+    public function getWorker()
     {
         return $this->worker;
     }
