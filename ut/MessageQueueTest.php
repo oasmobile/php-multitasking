@@ -39,6 +39,7 @@ class MessageQueueTest extends PHPUnit_Framework_TestCase
         $tempFile = tempnam(sys_get_temp_dir(), 'message-queue-ut-');
         
         $worker1 = function () {
+            sleep(1);
             $this->queue->send('abcdefg');
         };
         $worker2 = function () use ($tempFile) {
@@ -54,7 +55,8 @@ class MessageQueueTest extends PHPUnit_Framework_TestCase
         
         self::assertEquals('abcdefg', file_get_contents($tempFile));
     }
-    
+
+
     /**
      * @small
      */

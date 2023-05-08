@@ -14,9 +14,9 @@ class MessageQueue
     protected $key;
     protected $sem;
     protected $messageSizeLimit;
-    
+
     protected $queue;
-    
+
     /**
      * MessageQueue constructor.
      *
@@ -30,12 +30,12 @@ class MessageQueue
         $this->sem              = new Semaphore(__CLASS__ . "#" . $id);
         $this->messageSizeLimit = $messageSizeLimit;
     }
-    
+
     public function initialize()
     {
         if (!$this->queue) {
             $this->queue = msg_get_queue($this->key);
-            
+
             $this->sem->acquire();
             try {
                 $stat = msg_stat_queue($this->queue);
@@ -47,16 +47,16 @@ class MessageQueue
             }
         }
     }
-    
+
     public function send($msg, $type = 1, $blocking = true)
     {
         if ($type <= 0) {
             throw new \InvalidArgumentException("Message type should be a positive integer!");
         }
-        
+
         $this->initialize();
-        
-        $this->sem->acquire();
+
+        if (!$blocking) $this->sem->acquire();
         try {
             if (!($ret = msg_send(
                 $this->queue,
@@ -73,25 +73,25 @@ class MessageQueue
                     posix_strerror($errorCode)
                 );
             }
-            
+
         } finally {
-            $this->sem->release();
+            if (!$blocking) $this->sem->release();
         }
-        
+
         return $ret;
     }
-    
+
     public function receive(&$receivedMessage, &$receivedType, $expectedType = 0, $blocking = true)
     {
         $this->initialize();
-        
-        $this->sem->acquire();
+
+        if (!$blocking) $this->sem->acquire();
         try {
             $flag = 0;
             if (!$blocking) {
                 $flag |= MSG_IPC_NOWAIT;
             }
-            
+
             if (!($ret = msg_receive(
                 $this->queue,
                 $expectedType,
@@ -105,8 +105,7 @@ class MessageQueue
             ) {
                 if (MSG_ENOMSG == $errorCode) {
                     minfo("Queue is empty, no message of desired type %d, errno = %d", $expectedType, $errorCode);
-                }
-                else {
+                } else {
                     throw new \RuntimeException(
                         sprintf(
                             "Error receiving msg, error code = %d, description = %s",
@@ -117,17 +116,17 @@ class MessageQueue
                 }
             }
         } finally {
-            $this->sem->release();
+            if (!$blocking) $this->sem->release();
         }
-        
+
         return $ret;
     }
-    
+
     public function remove()
     {
         $this->initialize();
         mdebug("Removing message queue, key = %s", $this->key);
-        
+
         $this->sem->acquire();
         try {
             msg_remove_queue($this->queue);
@@ -136,6 +135,6 @@ class MessageQueue
             $this->sem->release();
             $this->sem->remove();
         }
-        
+
     }
 }
