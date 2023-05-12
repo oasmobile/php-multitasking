@@ -104,7 +104,7 @@ class MessageQueue
             ))
             ) {
                 if (MSG_ENOMSG == $errorCode) {
-                    minfo("Queue is empty, no message of desired type %d, errno = %d", $expectedType, $errorCode);
+//                    minfo("Queue is empty, no message of desired type %d, errno = %d", $expectedType, $errorCode);
                 } else {
                     throw new \RuntimeException(
                         sprintf(
@@ -125,7 +125,7 @@ class MessageQueue
     public function remove()
     {
         $this->initialize();
-        mdebug("Removing message queue, key = %s", $this->key);
+        mnotice("Removing message queue, key = %s", $this->key);
 
         $this->sem->acquire();
         try {
