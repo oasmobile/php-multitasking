@@ -78,5 +78,10 @@ class SharedMemoryTest extends PHPUnit_Framework_TestCase
         
         self::assertEquals(5678, file_get_contents($tempFile));
     }
-    
+
+    public function testAccessingNonExistingKey()
+    {
+        $ret = $this->memory->get('non-existing-value');
+        $this->assertNull($ret, "Non-existing value should return null");
+    }
 }

@@ -13,9 +13,9 @@ class SharedMemory
     protected $id;
     protected $key;
     protected $sem;
-    
+
     protected $mem;
-    
+
     /**
      * SharedMemory constructor.
      *
@@ -27,7 +27,7 @@ class SharedMemory
         $this->key = hexdec(substr(md5(md5($id) . "oasis-shared-memory"), 0, 8));
         $this->sem = new Semaphore(__CLASS__ . "#" . $id);
     }
-    
+
     public function close()
     {
         if ($this->mem) {
@@ -40,19 +40,19 @@ class SharedMemory
             }
         }
     }
-    
+
     public function initialize()
     {
         if (!$this->mem) {
             $this->mem = shm_attach($this->key);
         }
     }
-    
+
     public function remove()
     {
         $this->initialize();
         mdebug("Removing shared memory, key = %s", $this->key);
-        
+
         $this->sem->acquire();
         try {
             shm_remove($this->mem);
@@ -61,13 +61,13 @@ class SharedMemory
             $this->sem->release();
             $this->sem->remove();
         }
-        
+
     }
-    
+
     public function set($key, $value)
     {
         $this->initialize();
-        
+
         $this->sem->acquire();
         try {
             $key = $this->translateKeyToInteger($key);
@@ -75,29 +75,33 @@ class SharedMemory
         } finally {
             $this->sem->release();
         }
-        
+
         return $ret;
     }
-    
+
     public function get($key)
     {
         $this->initialize();
-        
+
         $this->sem->acquire();
         try {
             $key = $this->translateKeyToInteger($key);
-            $ret = shm_get_var($this->mem, $key);
+            if (shm_has_var($this->mem, $key)) {
+                $ret = shm_get_var($this->mem, $key);
+            } else {
+                $ret = null;
+            }
         } finally {
             $this->sem->release();
         }
-        
+
         return $ret;
     }
-    
+
     public function has($key)
     {
         $this->initialize();
-        
+
         $this->sem->acquire();
         try {
             $key = $this->translateKeyToInteger($key);
@@ -105,14 +109,14 @@ class SharedMemory
         } finally {
             $this->sem->release();
         }
-        
+
         return $ret;
     }
-    
+
     public function delete($key)
     {
         $this->initialize();
-        
+
         $this->sem->acquire();
         try {
             $key = $this->translateKeyToInteger($key);
@@ -120,13 +124,13 @@ class SharedMemory
         } finally {
             $this->sem->release();
         }
-        
+
         return $ret;
     }
-    
+
     protected function translateKeyToInteger($key)
     {
         return hexdec(substr(md5($key), 0, 8));
     }
-    
+
 }
