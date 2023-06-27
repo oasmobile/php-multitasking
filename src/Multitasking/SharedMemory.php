@@ -67,65 +67,66 @@ class SharedMemory
     public function set($key, $value)
     {
         $this->initialize();
-
-        $this->sem->acquire();
-        try {
+        return $this->sem->withLock(function () use ($key, $value) {
             $key = $this->translateKeyToInteger($key);
-            $ret = shm_put_var($this->mem, $key, $value);
-        } finally {
-            $this->sem->release();
-        }
-
-        return $ret;
+            return shm_put_var($this->mem, $key, $value);
+        });
     }
 
     public function get($key)
     {
         $this->initialize();
 
-        $this->sem->acquire();
-        try {
+        return $this->sem->withLock(function () use ($key) {
             $key = $this->translateKeyToInteger($key);
             if (shm_has_var($this->mem, $key)) {
                 $ret = shm_get_var($this->mem, $key);
             } else {
                 $ret = null;
             }
-        } finally {
-            $this->sem->release();
-        }
 
-        return $ret;
+            return $ret;
+        });
     }
 
     public function has($key)
     {
         $this->initialize();
 
-        $this->sem->acquire();
-        try {
+        return $this->sem->withLock(function () use ($key) {
             $key = $this->translateKeyToInteger($key);
-            $ret = shm_has_var($this->mem, $key);
-        } finally {
-            $this->sem->release();
-        }
-
-        return $ret;
+            return shm_has_var($this->mem, $key);
+        });
     }
 
     public function delete($key)
     {
         $this->initialize();
 
-        $this->sem->acquire();
-        try {
+        return $this->sem->withLock(function () use ($key) {
             $key = $this->translateKeyToInteger($key);
-            $ret = shm_remove_var($this->mem, $key);
-        } finally {
-            $this->sem->release();
-        }
+            return shm_remove_var($this->mem, $key);
+        });
+    }
 
-        return $ret;
+    public function actOnKey($key, callable $callback)
+    {
+        $this->initialize();
+
+        return $this->sem->withLock(
+            function () use ($key, $callback) {
+                $key = $this->translateKeyToInteger($key);
+                if (shm_has_var($this->mem, $key)) {
+                    $ret = shm_get_var($this->mem, $key);
+                } else {
+                    $ret = null;
+                }
+                $ret = $callback($ret);
+                shm_put_var($this->mem, $key, $ret);
+
+                return $ret;
+            }
+        );
     }
 
     protected function translateKeyToInteger($key)

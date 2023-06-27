@@ -84,4 +84,59 @@ class SharedMemoryTest extends PHPUnit_Framework_TestCase
         $ret = $this->memory->get('non-existing-value');
         $this->assertNull($ret, "Non-existing value should return null");
     }
+
+    public function testActOnKeyWithExistingValue()
+    {
+        $this->memory->set('counter', 5);
+
+        $result = $this->memory->actOnKey('counter', function ($value) {
+            return $value * 2;
+        });
+
+        self::assertEquals(10, $result);
+        self::assertEquals(10, $this->memory->get('counter'));
+    }
+
+    public function testActOnKeyWithNonExistingValue()
+    {
+        $result = $this->memory->actOnKey('non_existing_key', function ($value) {
+            return $value === null ? 'new_value' : $value;
+        });
+
+        self::assertEquals('new_value', $result);
+        self::assertEquals('new_value', $this->memory->get('non_existing_key'));
+    }
+
+    public function testActOnKeyWithMultipleProcesses()
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'shared-memory-ut-');
+        $this->memory->set('counter', 0);
+
+        $worker1 = function () {
+            for ($i = 0; $i < 10; ++$i) {
+                $this->memory->actOnKey('counter', function ($value) {
+                    return $value + 1;
+                });
+                usleep(100000);
+            }
+        };
+
+        $worker2 = function () use ($tempFile) {
+            for ($i = 0; $i < 10; ++$i) {
+                $this->memory->actOnKey('counter', function ($value) {
+                    return $value + 1;
+                });
+                usleep(100000);
+            }
+            file_put_contents($tempFile, $this->memory->get('counter'));
+        };
+
+        $man = new BackgroundWorkerManager(2);
+        $man->addWorker($worker1);
+        $man->addWorker($worker2);
+        $man->run();
+        $man->wait();
+
+        self::assertEquals(20, file_get_contents($tempFile));
+    }
 }
