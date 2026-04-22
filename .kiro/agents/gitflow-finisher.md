@@ -132,7 +132,7 @@ git merge --no-ff master -m "merge master into release/<version>"
 
 1. **release → master**：切换到 master，merge release 分支
 2. **打正式 tag**：`git tag v<version>`
-3. **推送 tag**：`git push origin v<version>`
+3. **推送 master 和 tag**：`git push origin master v<version>`
 4. **删除预发布 tag**：删除 `v<version>-alpha*`、`v<version>-beta*` 等预发布 tag
 5. **master → develop**：切换到 develop，merge master
 
@@ -186,7 +186,7 @@ git merge --no-ff master -m "merge master into hotfix/<version>"
 
 1. **hotfix → master**：切换到 master，merge hotfix 分支
 2. **打正式 tag**：`git tag v<version>`
-3. **推送 tag**：`git push origin v<version>`
+3. **推送 master 和 tag**：`git push origin master v<version>`
 4. **master → develop**：切换到 develop，merge master
 
 **禁止 hotfix → develop 直接 merge**。develop 必须经由 master 获取 hotfix 内容。
