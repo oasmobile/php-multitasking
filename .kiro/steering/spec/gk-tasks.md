@@ -56,7 +56,7 @@ Feature / Hotfix 的 tasks.md 必须包含 `## Tasks` section，其中的 top-le
 Release spec 的 tasks 结构不同：
 
 - 结构为 task → sub-task → test item 三级嵌套
-- 每个 top-level task 的第一个 sub-task 为 "Increment alpha tag"
+- 手工测试类 top-level task 的第一个 sub-task 为 "Increment alpha tag"
 - 测试项使用 checkbox 语法：`- [ ]` 未测试、`- [x]` 通过、`- [-]` 进行中
 - 明确前置条件（构建命令、环境变量等）
 - 文件包含两个主要 section：
@@ -67,7 +67,7 @@ Release spec 的 tasks 结构不同：
 ### 检查项
 
 - [ ] `## Tasks` section 存在
-- [ ] Release spec 中每个 top-level task 的第一个 sub-task 是 "Increment alpha tag"
+- [ ] Release spec 中手工测试类 top-level task 的第一个 sub-task 是 "Increment alpha tag"
 - [ ] 倒数第一个 top-level task 是 Code Review
 - [ ] 倒数第二个 top-level task 是手工测试（feature / hotfix spec）
 - [ ] 自动化实现 task 排在手工测试和 Code Review 之前
@@ -116,8 +116,8 @@ Release spec 的 tasks 结构不同：
 
 - [ ] checkpoint 不作为独立的 top-level task，而是作为每个 top-level task 的最后一个 sub-task
 - [ ] 每个 top-level task 的最后一个 sub-task 是 checkpoint
-- [ ] checkpoint 描述中包含具体的验证命令或验证方式（如"执行全量测试确认通过"）
-- [ ] checkpoint 不是空泛的"确认完成"，而是有可执行的验证步骤
+- [ ] checkpoint 描述中包含具体的验证命令或验证方式（如"执行全量测试确认通过"）以及 commit 动作
+- [ ] checkpoint 不是空泛的"确认完成"，而是有可执行的验证步骤和明确的 commit
 
 ---
 
@@ -159,16 +159,16 @@ Release spec 的 tasks 结构不同：
 
 ## 11. 执行注意事项校验
 
-tasks.md 必须包含 `## Execution Notes` section（位于 `## Tasks` 之后），提醒执行者在执行 task 时应遵循的关键规范。
+tasks.md 必须包含 `## Notes` section（位于 `## Tasks` 之后），提醒执行者在执行 task 时应遵循的关键规范。
 
 ### 检查项
 
-- [ ] `## Execution Notes` section 存在
+- [ ] `## Notes` section 存在
 - [ ] 明确提到执行时须遵循 `spec-execution.md`（或等效表述，如"按 spec-execution 规范执行"）
-- [ ] 明确说明 commit 时机（如"每个 top-level task checkpoint 通过后进行一次 commit"或等效表述）
+- [ ] 明确说明 commit 随 checkpoint 一起执行（或等效表述，如"checkpoint 中已包含 commit"）
 - [ ] 包含当前 spec 特有的执行要点（如特殊的构建命令、环境前置条件、数据兼容注意事项等）——如果 design 或 requirements 中没有特殊要点，至少保留对 `spec-execution.md` 的引用和 commit 时机说明即可
 
-> **注意**：如果文档使用了 `## Notes` 等非标准名称但内容等价，gatekeeper 应将其重命名为 `## Execution Notes` 并补充缺失内容，而非另建一个 section。
+> **注意**：如果文档使用了 `## Execution Notes` 等非标准名称但内容等价，gatekeeper 应将其重命名为 `## Notes` 并补充缺失内容，而非另建一个 section。
 
 ---
 

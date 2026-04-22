@@ -36,7 +36,7 @@ description: 当开启一个新的 spec、生成 requirements、生成 design、
 - 如果 design.md Gatekeep Log 中存在 Clarification Round 且用户已回答，生成前先读取，确保 tasks 编排体现用户在 design CR 中做出的决策
 - 所有 tasks 都是 mandatory，不应该存在 optional
 - **Test First（RED → GREEN）**：先编排写测试的 task（RED），再编排实现的 task（GREEN）
-- **Checkpoint 编排**：checkpoint 不单独作为 top-level task，而是作为每个 top-level task 的最后一个 sub-task（如 `N.x Checkpoint: 验证描述`）
+- **Checkpoint 编排**：checkpoint 不单独作为 top-level task，而是作为每个 top-level task 的最后一个 sub-task（如 `N.x Checkpoint: 验证描述，commit`），checkpoint 须同时包含验证步骤和 commit 动作
 - 完成后做 Socratic Review 并记录 log
 - 生成完成后提醒用户：可以运行 gatekeeper（`GK`）对 tasks 进行校验
 - 必须考虑是否需要手工测试
@@ -48,5 +48,5 @@ description: 当开启一个新的 spec、生成 requirements、生成 design、
 | N+1 | 手工测试 task |
 | 最后 | Code Review task |
 
-- **Release top-level task 额外规则**：每个 top-level task 的第一个 sub-task 为 "Increment alpha tag"（查询已有 alpha tag，取最大序号 +1，打新 tag）
-- **Execution Notes section**：`## Tasks` 之后须包含 `## Execution Notes` section，至少明确提到执行时须遵循 `spec-execution.md`，并说明 commit 时机（如 checkpoint 通过后 commit）；如有当前 spec 特有的执行要点（特殊构建命令、环境前置条件、数据兼容注意事项等），一并列出
+- **Release top-level task 额外规则**：手工测试类 top-level task 的第一个 sub-task 为 "Increment alpha tag"（查询已有 alpha tag，取最大序号 +1，打新 tag）
+- **Notes section**：`## Tasks` 之后须包含 `## Notes` section，至少明确提到执行时须遵循 `spec-execution.md`；如有当前 spec 特有的执行要点（特殊构建命令、环境前置条件、数据兼容注意事项等），一并列出
