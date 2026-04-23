@@ -127,19 +127,19 @@
     - _Ref: Requirement 9, AC 2_
   - [x] 9.3 Checkpoint: 执行 `vendor/bin/phpunit --filter SharedMemoryPbtTest` 确认通过，commit
 
-- [-] 10. PBT — MessageQueue round-trip
+- [x] 10. PBT — MessageQueue round-trip
   - [x] 10.1 创建 `ut/MessageQueuePbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `MessageQueue` 实例（使用唯一 ID），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
     - _Ref: Requirement 9, AC 1, 3_
   - [x] 10.2 编写 Property 2: MessageQueue round-trip 属性测试 — 使用 `forAll(Generator\oneOf(Generator\int(), Generator\string(), Generator\bool()))` 生成随机消息；验证 `send(msg)` → `receive()` 返回的消息等于原始 `msg`
     - _Ref: Requirement 9, AC 3_
-  - [-] 10.3 Checkpoint: 执行 `vendor/bin/phpunit --filter MessageQueuePbtTest` 确认通过，commit
+  - [x] 10.3 Checkpoint: 执行 `vendor/bin/phpunit --filter MessageQueuePbtTest` 确认通过，commit
 
-- [ ] 11. PBT — Semaphore idempotence
-  - [ ] 11.1 创建 `ut/SemaphorePbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `Semaphore` 实例（使用唯一 ID），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
+- [-] 11. PBT — Semaphore idempotence
+  - [x] 11.1 创建 `ut/SemaphorePbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `Semaphore` 实例（使用唯一 ID），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
     - _Ref: Requirement 9, AC 1, 4_
-  - [ ] 11.2 编写 Property 3: Semaphore idempotence 属性测试 — 使用 `forAll(Generator\choose(1, 50))` 生成随机循环次数 `n`；验证 `n` 次 acquire/release 循环后，仍可成功 acquire/release
+  - [x] 11.2 编写 Property 3: Semaphore idempotence 属性测试 — 使用 `forAll(Generator\choose(1, 50))` 生成随机循环次数 `n`；验证 `n` 次 acquire/release 循环后，仍可成功 acquire/release
     - _Ref: Requirement 9, AC 4_
-  - [ ] 11.3 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试（现有 + PBT）通过，commit
+  - [-] 11.3 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试（现有 + PBT）通过，commit
     - _Ref: Requirement 9, AC 5_
 
 - [ ] 12. SSOT 文档更新
