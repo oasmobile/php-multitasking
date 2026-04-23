@@ -3,6 +3,7 @@
 
 # PHPUnit cache (PHPUnit 11+)
 .phpunit.cache/
+.phpunit.result.cache
 
 # Agent playbook export
 agent-playbook.zip
