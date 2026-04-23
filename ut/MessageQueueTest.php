@@ -59,14 +59,20 @@ class MessageQueueTest extends \PHPUnit\Framework\TestCase
 
     public function testNonBlockingReceive()
     {
-        $this->queue->receive($msg, $type, 0, false);
+        $ret = $this->queue->receive($msg, $type, 0, false);
+        self::assertFalse($ret);
     }
-    
+
     public function testSerialization()
     {
-        $this->queue->send(new Memcached());
+        $obj = new \stdClass();
+        $obj->key = 'value';
+        $obj->num = 42;
+        $this->queue->send($obj);
         $this->queue->receive($msg, $type);
-        self::assertInstanceOf(Memcached::class, $msg);
+        self::assertInstanceOf(\stdClass::class, $msg);
+        self::assertEquals('value', $msg->key);
+        self::assertEquals(42, $msg->num);
     }
     
     public function testMessageType()

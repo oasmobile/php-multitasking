@@ -142,19 +142,19 @@
   - [x] 11.3 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试（现有 + PBT）通过，commit
     - _Ref: Requirement 9, AC 5_
 
-- [-] 12. SSOT 文档更新
+- [x] 12. SSOT 文档更新
   - [x] 12.1 更新 `docs/state/architecture.md`：技术选型表 PHP 版本 `>=5.6.1` → `>=8.2`、测试框架 `PHPUnit ^5.5` → `PHPUnit ^11.0`；新增 `giorgiosironi/eris ^0.14.0` 作为 dev 依赖；测试策略表移除 `enforceTimeLimit` 描述、新增 PBT 测试说明
     - _Ref: Requirement 10, AC 1-3_
   - [x] 12.2 更新 `docs/state/api.md`：反映各类构造函数和方法签名中新增的类型声明（参数类型、返回类型）；反映 readonly 属性变更；确认不记录任何行为变更（本次无行为变更）
     - _Ref: Requirement 10, AC 4-5_
-  - [-] 12.3 Checkpoint: 审查 SSOT 文档与代码一致性，commit
+  - [x] 12.3 Checkpoint: 审查 SSOT 文档与代码一致性，commit
 
-- [ ] 13. 手工测试 — Release Stabilize
-  - [ ] 13.1 Increment alpha tag
-  - [ ] 13.2 验证 `composer install` 在干净环境下无冲突，依赖树正确解析
-  - [ ] 13.3 验证 `vendor/bin/phpunit` 全量测试通过，输出干净（无 deprecation warning、无异常堆栈）
-  - [ ] 13.4 验证 IPC 组件（Semaphore、MessageQueue、SharedMemory）的 PBT 测试在多次运行下稳定通过
-  - [ ] 13.5 验证源代码中所有公共方法签名与 `docs/state/api.md` 一致
+- [-] 13. 手工测试 — Release Stabilize
+  - [x] 13.1 Increment alpha tag
+  - [-] 13.2 验证 `composer install` 在干净环境下无冲突，依赖树正确解析
+  - [-] 13.3 验证 `vendor/bin/phpunit` 全量测试通过，输出干净（无 deprecation warning、无异常堆栈）
+  - [-] 13.4 验证 IPC 组件（Semaphore、MessageQueue、SharedMemory）的 PBT 测试在多次运行下稳定通过
+  - [-] 13.5 验证源代码中所有公共方法签名与 `docs/state/api.md` 一致
   - [ ] 13.6 验证 `docs/state/architecture.md` 中技术选型信息与 `composer.json` 一致
   - [ ] 13.7 Checkpoint: 全部手工测试通过，commit
 

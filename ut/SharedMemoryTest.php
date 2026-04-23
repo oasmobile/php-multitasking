@@ -34,9 +34,14 @@ class SharedMemoryTest extends \PHPUnit\Framework\TestCase
     
     public function testSerialization()
     {
-        $this->memory->set('abc', new Memcached());
+        $obj = new \stdClass();
+        $obj->key = 'value';
+        $obj->num = 42;
+        $this->memory->set('abc', $obj);
         $val = $this->memory->get('abc');
-        self::assertInstanceOf(Memcached::class, $val);
+        self::assertInstanceOf(\stdClass::class, $val);
+        self::assertEquals('value', $val->key);
+        self::assertEquals(42, $val->num);
     }
     
     public function testExistenceCheckAndDelete()

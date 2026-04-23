@@ -13,7 +13,8 @@ class SemaphoreTest extends \PHPUnit\Framework\TestCase
     public function testNormalCase()
     {
         $sem = new Semaphore('');
-        $sem->acquire();
+        $acquired = $sem->acquire();
+        self::assertTrue($acquired);
         $sem->release();
         $sem->remove();
     }
