@@ -24,7 +24,7 @@
   - [x] 2.4 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部现有测试通过，commit
     - _Ref: Requirement 2, AC 4_
 
-- [-] 3. PHP 8 现代化 — Semaphore
+- [x] 3. PHP 8 现代化 — Semaphore
   - [x] 3.1 为所有属性添加类型声明：`$maxAcquire: int`、`$id: string`、`$key: int`、`$sem: \SysvSemaphore|null`
     - _Ref: Requirement 3, AC 1-3; Requirement 5, AC 2_
   - [x] 3.2 将 `$id`、`$key`、`$maxAcquire` 标记为 `readonly`（构造后不变）
@@ -37,39 +37,39 @@
     - _Ref: Requirement 8, AC 4_
   - [x] 3.6 顺带检查是否存在 `strpos`/`substr`/`switch`/named arguments 适用场景（design 扫描结果：无适用场景）
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [-] 3.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
+  - [x] 3.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [ ] 4. PHP 8 现代化 — MessageQueue
-  - [ ] 4.1 为所有属性添加类型声明：`$id: string`、`$key: int`、`$sem: Semaphore`、`$messageSizeLimit: int`、`$queue: \SysvMessageQueue|null`
+- [x] 4. PHP 8 现代化 — MessageQueue
+  - [x] 4.1 为所有属性添加类型声明：`$id: string`、`$key: int`、`$sem: Semaphore`、`$messageSizeLimit: int`、`$queue: \SysvMessageQueue|null`
     - _Ref: Requirement 3, AC 1-3; Requirement 5, AC 2_
-  - [ ] 4.2 将 `$id`、`$key`、`$sem`、`$messageSizeLimit` 标记为 `readonly`（构造后不变）
+  - [x] 4.2 将 `$id`、`$key`、`$sem`、`$messageSizeLimit` 标记为 `readonly`（构造后不变）
     - _Ref: Requirement 7, AC 1, 3_
-  - [ ] 4.3 为所有公共方法添加参数类型和返回类型：`initialize(): void`、`send(mixed $msg, int $type = 1, bool $blocking = true): bool`、`receive(mixed &$receivedMessage, int &$receivedType, int $expectedType = 0, bool $blocking = true): bool`、`remove(): void`
+  - [x] 4.3 为所有公共方法添加参数类型和返回类型：`initialize(): void`、`send(mixed $msg, int $type = 1, bool $blocking = true): bool`、`receive(mixed &$receivedMessage, int &$receivedType, int $expectedType = 0, bool $blocking = true): bool`、`remove(): void`
     - _Ref: Requirement 5, AC 1-4_
-  - [ ] 4.4 确认不使用 constructor promotion（design 决策：`$key` 和 `$sem` 依赖 `$id` 计算）
+  - [x] 4.4 确认不使用 constructor promotion（design 决策：`$key` 和 `$sem` 依赖 `$id` 计算）
     - _Ref: Requirement 4, AC 1_
-  - [ ] 4.5 移除纯类型 PHPDoc 注释
+  - [x] 4.5 移除纯类型 PHPDoc 注释
     - _Ref: Requirement 8, AC 4_
-  - [ ] 4.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
+  - [x] 4.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [ ] 4.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
+  - [x] 4.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [ ] 5. PHP 8 现代化 — SharedMemory
-  - [ ] 5.1 为所有属性添加类型声明：`$id: string`、`$key: int`、`$sem: Semaphore`、`$mem: \SysvSharedMemory|null`
+- [-] 5. PHP 8 现代化 — SharedMemory
+  - [x] 5.1 为所有属性添加类型声明：`$id: string`、`$key: int`、`$sem: Semaphore`、`$mem: \SysvSharedMemory|null`
     - _Ref: Requirement 3, AC 1-3; Requirement 5, AC 2_
-  - [ ] 5.2 将 `$id`、`$key`、`$sem` 标记为 `readonly`（构造后不变）
+  - [x] 5.2 将 `$id`、`$key`、`$sem` 标记为 `readonly`（构造后不变）
     - _Ref: Requirement 7, AC 1, 3_
-  - [ ] 5.3 为所有公共/保护方法添加参数类型和返回类型：`close(): void`、`initialize(): void`、`remove(): void`、`set(string|int $key, mixed $value): bool`、`get(string|int $key): mixed`、`has(string|int $key): bool`、`delete(string|int $key): bool`、`actOnKey(string|int $key, callable $callback): mixed`、`translateKeyToInteger(string|int $key): int`
+  - [x] 5.3 为所有公共/保护方法添加参数类型和返回类型：`close(): void`、`initialize(): void`、`remove(): void`、`set(string|int $key, mixed $value): bool`、`get(string|int $key): mixed`、`has(string|int $key): bool`、`delete(string|int $key): bool`、`actOnKey(string|int $key, callable $callback): mixed`、`translateKeyToInteger(string|int $key): int`
     - _Ref: Requirement 5, AC 1-4_
-  - [ ] 5.4 确认不使用 constructor promotion（design 决策：同 Semaphore 理由）
+  - [x] 5.4 确认不使用 constructor promotion（design 决策：同 Semaphore 理由）
     - _Ref: Requirement 4, AC 1_
-  - [ ] 5.5 移除纯类型 PHPDoc 注释
+  - [x] 5.5 移除纯类型 PHPDoc 注释
     - _Ref: Requirement 8, AC 4_
-  - [ ] 5.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
+  - [x] 5.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [ ] 5.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
+  - [-] 5.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
 - [ ] 6. PHP 8 现代化 — WorkerInfo
