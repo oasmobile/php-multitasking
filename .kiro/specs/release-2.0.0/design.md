@@ -144,13 +144,13 @@ PHPUnit 11 要求使用新的 XML schema。主要变更：
 | Typed properties | `$id: string`, `$key: int`, `$sem: Semaphore`, `$messageSizeLimit: int`, `$queue: \SysvMessageQueue\|null` |
 | Constructor promotion | 与 Semaphore 同理，不使用 promotion（`$key` 和 `$sem` 依赖 `$id` 计算） |
 | Return types | `initialize(): void`, `send(): bool`, `receive(): bool`, `remove(): void` |
-| Parameter types | `send(mixed $msg, int $type = 1, bool $blocking = true)`, `receive(mixed &$receivedMessage, int &$receivedType, int $expectedType = 0, bool $blocking = true)` |
+| Parameter types | `send(mixed $msg, int $type = 1, bool $blocking = true)`, `receive(mixed &$receivedMessage, mixed &$receivedType, int $expectedType = 0, bool $blocking = true)` |
 | Readonly | `$id`、`$key`、`$sem`、`$messageSizeLimit`（均构造后不变） |
 | PHPDoc 清理 | 移除纯类型注释 |
 
 **设计决策**: `$queue` 类型为 `\SysvMessageQueue|null`。PHP 8.0 起 `msg_get_queue()` 返回 `\SysvMessageQueue` 对象。
 
-**设计决策**: `receive()` 的引用参数中，`&$receivedMessage` 使用 `mixed` 类型（输出内容类型不确定），`&$receivedType` 使用 `int` 类型（`msg_receive` 输出的 type 始终为整数）。PHP 8 的引用参数类型声明在赋值时强制检查，对于输出参数，调用者传入未初始化变量不会触发 TypeError。
+**设计决策**: `receive()` 的引用参数中，`&$receivedMessage` 和 `&$receivedType` 均使用 `mixed` 类型。虽然 `msg_receive` 输出的 type 始终为整数，但 PHP 8 对引用参数在调用时强制类型检查——调用者传入未初始化变量（隐式 `null`）会触发 `TypeError: must be of type int, null given`。使用 `mixed` 保持向后兼容性（Requirement 11）。
 
 ##### SharedMemory
 
