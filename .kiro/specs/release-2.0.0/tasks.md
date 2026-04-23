@@ -15,29 +15,29 @@
     - _Ref: Requirement 1, AC 5_
   - [x] 1.3 Checkpoint: 执行 `composer install` 确认无冲突，commit
 
-- [-] 2. PHPUnit 配置与测试基类适配
+- [x] 2. PHPUnit 配置与测试基类适配
   - [x] 2.1 更新 `phpunit.xml` 至 PHPUnit 11 schema：`xsi:noNamespaceSchemaLocation` 更新为 `vendor/phpunit/phpunit/phpunit.xsd`；移除 `enforceTimeLimit` 属性（PHPUnit 11 已移除）；testsuite 从逐文件 `<file>` 列举改为 `<directory>ut</directory>`（PHPUnit 默认匹配 `*Test.php` 后缀）
     - _Ref: Requirement 2, AC 1_
   - [x] 2.2 适配 4 个测试文件的 PHPUnit 11 基类：`ut/BackgroundWorkerManagerTest.php`、`ut/SemaphoreTest.php`、`ut/MessageQueueTest.php`、`ut/SharedMemoryTest.php` — 基类从 `PHPUnit_Framework_TestCase` 改为 `PHPUnit\Framework\TestCase`；`setUp()` / `tearDown()` 添加 `: void` 返回类型
     - _Ref: Requirement 2, AC 2-3_
   - [x] 2.3 确认 `ut/bootstrap.php` autoload 路径正确，无需结构性变更
-  - [-] 2.4 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部现有测试通过，commit
+  - [x] 2.4 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部现有测试通过，commit
     - _Ref: Requirement 2, AC 4_
 
-- [ ] 3. PHP 8 现代化 — Semaphore
-  - [ ] 3.1 为所有属性添加类型声明：`$maxAcquire: int`、`$id: string`、`$key: int`、`$sem: \SysvSemaphore|null`
+- [-] 3. PHP 8 现代化 — Semaphore
+  - [x] 3.1 为所有属性添加类型声明：`$maxAcquire: int`、`$id: string`、`$key: int`、`$sem: \SysvSemaphore|null`
     - _Ref: Requirement 3, AC 1-3; Requirement 5, AC 2_
-  - [ ] 3.2 将 `$id`、`$key`、`$maxAcquire` 标记为 `readonly`（构造后不变）
+  - [x] 3.2 将 `$id`、`$key`、`$maxAcquire` 标记为 `readonly`（构造后不变）
     - _Ref: Requirement 7, AC 1, 3_
-  - [ ] 3.3 为所有公共/保护方法添加参数类型和返回类型：`acquire(bool $nowait = false): bool`、`initialize(): void`、`release(): void`、`remove(): void`、`getId(): string`、`withLock(callable $callback): mixed`
+  - [x] 3.3 为所有公共/保护方法添加参数类型和返回类型：`acquire(bool $nowait = false): bool`、`initialize(): void`、`release(): void`、`remove(): void`、`getId(): string`、`withLock(callable $callback): mixed`
     - _Ref: Requirement 5, AC 1-4_
-  - [ ] 3.4 确认不使用 constructor promotion（design 决策：`$key` 依赖 `$id` 计算，为保持风格一致全部在构造器体内赋值）
+  - [x] 3.4 确认不使用 constructor promotion（design 决策：`$key` 依赖 `$id` 计算，为保持风格一致全部在构造器体内赋值）
     - _Ref: Requirement 4, AC 1_
-  - [ ] 3.5 移除与原生类型声明完全一致且无额外描述的 PHPDoc 注释；保留含描述文本的注释（如 `@param string $id a string identifying the semaphore`）
+  - [x] 3.5 移除与原生类型声明完全一致且无额外描述的 PHPDoc 注释；保留含描述文本的注释（如 `@param string $id a string identifying the semaphore`）
     - _Ref: Requirement 8, AC 4_
-  - [ ] 3.6 顺带检查是否存在 `strpos`/`substr`/`switch`/named arguments 适用场景（design 扫描结果：无适用场景）
+  - [x] 3.6 顺带检查是否存在 `strpos`/`substr`/`switch`/named arguments 适用场景（design 扫描结果：无适用场景）
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [ ] 3.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
+  - [-] 3.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
 - [ ] 4. PHP 8 现代化 — MessageQueue

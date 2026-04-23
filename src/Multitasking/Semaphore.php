@@ -11,18 +11,17 @@ namespace Oasis\Mlib\Multitasking;
 class Semaphore
 {
 
-    protected $maxAcquire = 1;
-    protected $id         = '';
-    protected $key        = '';
-    protected $sem        = null;
+    protected readonly int $maxAcquire;
+    protected readonly string $id;
+    protected readonly int $key;
+    protected \SysvSemaphore|null $sem = null;
 
     /**
      * Semaphore constructor.
      *
      * @param string $id a string identifying the semaphore
-     * @param int    $maxAcquire
      */
-    public function __construct($id, $maxAcquire = 1)
+    public function __construct(string $id, int $maxAcquire = 1)
     {
         $this->id         = $id;
         $this->key        = hexdec(substr(md5(md5($id) . 'oasis-semaphore'), 0, 8));
@@ -33,7 +32,7 @@ class Semaphore
     {
     }
 
-    public function acquire($nowait = false)
+    public function acquire(bool $nowait = false): bool
     {
         if (!$this->sem) {
             $this->initialize();
@@ -48,13 +47,13 @@ class Semaphore
         return $ret;
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->debug("Initializing semaphore %s with key: %x", $this->id, $this->key);
         $this->sem = sem_get($this->key, $this->maxAcquire, 0666, 1);
     }
 
-    public function release()
+    public function release(): void
     {
         if (!$this->sem) {
             mwarning("Releasing while not initialized!");
@@ -67,7 +66,7 @@ class Semaphore
         $this->debug("Released");
     }
 
-    public function remove()
+    public function remove(): void
     {
         if (!$this->sem) {
             $this->initialize();
@@ -78,15 +77,12 @@ class Semaphore
         $this->sem = null;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function withLock($callback)
+    public function withLock(callable $callback): mixed
     {
         $this->acquire();
         try {
@@ -98,7 +94,7 @@ class Semaphore
         return $ret;
     }
 
-    private function debug(...$args)
+    private function debug(string $format, mixed ...$args): void
     {
         static $logDebug = null;
         if ($logDebug === null && \getenv('DEBUG_OASIS_MULTITASKING')) {
@@ -107,7 +103,7 @@ class Semaphore
             $logDebug = false;
         }
         if ($logDebug) {
-            \call_user_func_array("mdebug", $args);
+            \call_user_func_array("mdebug", [$format, ...$args]);
         }
     }
 }
