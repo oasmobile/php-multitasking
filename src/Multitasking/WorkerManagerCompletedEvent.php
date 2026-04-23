@@ -15,13 +15,13 @@ class WorkerManagerCompletedEvent extends Event
     /**
      * @var WorkerInfo[]
      */
-    private $successfulWorkers;
+    private readonly array $successfulWorkers;
     /**
      * @var WorkerInfo[]
      */
-    private $failedWorkers;
+    private readonly array $failedWorkers;
     
-    public function __construct($successfulWorkers, $failedWorkers)
+    public function __construct(array $successfulWorkers, array $failedWorkers)
     {
         parent::__construct(BackgroundWorkerManager::EVENT_ALL_COMPLETED);
         
@@ -29,7 +29,7 @@ class WorkerManagerCompletedEvent extends Event
         $this->failedWorkers     = $failedWorkers;
     }
     
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return count($this->failedWorkers) == 0;
     }
@@ -37,7 +37,7 @@ class WorkerManagerCompletedEvent extends Event
     /**
      * @return WorkerInfo[]
      */
-    public function getFailedWorkers()
+    public function getFailedWorkers(): array
     {
         return $this->failedWorkers;
     }
@@ -45,7 +45,7 @@ class WorkerManagerCompletedEvent extends Event
     /**
      * @return WorkerInfo[]
      */
-    public function getSuccessfulWorkers()
+    public function getSuccessfulWorkers(): array
     {
         return $this->successfulWorkers;
     }
