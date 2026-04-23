@@ -149,14 +149,14 @@
     - _Ref: Requirement 10, AC 4-5_
   - [x] 12.3 Checkpoint: 审查 SSOT 文档与代码一致性，commit
 
-- [-] 13. 手工测试 — Release Stabilize
+- [x] 13. 手工测试 — Release Stabilize
   - [x] 13.1 Increment alpha tag
-  - [-] 13.2 验证 `composer install` 在干净环境下无冲突，依赖树正确解析
-  - [-] 13.3 验证 `vendor/bin/phpunit` 全量测试通过，输出干净（无 deprecation warning、无异常堆栈）
-  - [-] 13.4 验证 IPC 组件（Semaphore、MessageQueue、SharedMemory）的 PBT 测试在多次运行下稳定通过
-  - [-] 13.5 验证源代码中所有公共方法签名与 `docs/state/api.md` 一致
-  - [ ] 13.6 验证 `docs/state/architecture.md` 中技术选型信息与 `composer.json` 一致
-  - [ ] 13.7 Checkpoint: 全部手工测试通过，commit
+  - [x] 13.2 验证 `composer install` 在干净环境下无冲突，依赖树正确解析
+  - [x] 13.3 验证 `vendor/bin/phpunit` 全量测试通过，输出干净（无 deprecation warning、无异常堆栈）
+  - [x] 13.4 验证 IPC 组件（Semaphore、MessageQueue、SharedMemory）的 PBT 测试在多次运行下稳定通过
+  - [x] 13.5 验证源代码中所有公共方法签名与 `docs/state/api.md` 一致
+  - [x] 13.6 验证 `docs/state/architecture.md` 中技术选型信息与 `composer.json` 一致
+  - [x] 13.7 Checkpoint: 全部手工测试通过，commit
 
 - [ ] 14. Code Review
   - [ ] 14.1 委托给 code-reviewer sub-agent 执行
@@ -164,7 +164,13 @@
 
 ## Issues
 
-（stabilize 阶段新发现的 issue 记录于此，初始为空）
+（stabilize 阶段发现的 issue）
+
+### Fixed in v2.0.0-alpha1
+
+1. **eris ^0.14.0 在 PHP 8.5 上产生 deprecation warning** — eris 0.14.x 内部使用 implicit nullable parameter，PHP 8.5 将其标记为 deprecated。升级 eris 至 `^1.0`（实际安装 1.1.0）解决。同步更新 `composer.json`、`docs/state/architecture.md`。
+2. **testSerialization 依赖 ext-memcached** — `MessageQueueTest::testSerialization` 和 `SharedMemoryTest::testSerialization` 使用 `new Memcached()` 作为序列化测试对象，但 `ext-memcached` 不是项目依赖。改用 `stdClass` 替代，测试意图不变。
+3. **两个 risky test 缺少断言** — `SemaphoreTest::testNormalCase` 和 `MessageQueueTest::testNonBlockingReceive` 无断言，PHPUnit 11 标记为 risky。补充断言修复。
 
 ## Socratic Review
 
