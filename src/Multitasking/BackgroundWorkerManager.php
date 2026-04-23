@@ -18,21 +18,20 @@ class BackgroundWorkerManager implements EventDispatcherInterface
     const EVENT_WORKER_FINISHED = 'worker_finished';
     const EVENT_ALL_COMPLETED   = 'all_completed';
     
-    protected $parentProcessId = 0;
-    /** @var  int */
-    protected $numberOfConcurrentWorkers;
+    protected readonly int $parentProcessId;
+    protected int $numberOfConcurrentWorkers;
     /** @var WorkerInfo[] */
-    protected $pendingWorkers = [];
+    protected array $pendingWorkers = [];
     /** @var WorkerInfo[] */
-    protected $runningProcesses = [];
+    protected array $runningProcesses = [];
     /** @var WorkerInfo[] */
-    protected $successfulProcesses = [];
+    protected array $successfulProcesses = [];
     /** @var WorkerInfo[] */
-    protected $failedProcesses    = [];
-    protected $startedWorkerCount = 0;
-    protected $totalWorkerCount   = 0;
+    protected array $failedProcesses    = [];
+    protected int $startedWorkerCount = 0;
+    protected int $totalWorkerCount   = 0;
     
-    public function __construct($numberOfConcurrentWorkers = 1)
+    public function __construct(int $numberOfConcurrentWorkers = 1)
     {
         $this->numberOfConcurrentWorkers = $numberOfConcurrentWorkers;
         
@@ -40,13 +39,10 @@ class BackgroundWorkerManager implements EventDispatcherInterface
     }
     
     /**
-     * @param callable $worker
-     * @param int      $count
-     *
      * @return array ID:s of added worker. Those ID:s can be used to match against worker finished event dispatched by
      *               the manager.
      */
-    public function addWorker(callable $worker, $count = 1)
+    public function addWorker(callable $worker, int $count = 1): array
     {
         $ret = [];
         for ($i = 0; $i < $count; ++$i) {
@@ -61,7 +57,7 @@ class BackgroundWorkerManager implements EventDispatcherInterface
     /**
      * @return int num of started workers (always <= num-of-concurrent-workers)
      */
-    public function run()
+    public function run(): int
     {
         $this->assertInParentProcess();
         
@@ -91,7 +87,7 @@ class BackgroundWorkerManager implements EventDispatcherInterface
      *
      * @return int num of failed workers
      */
-    public function wait()
+    public function wait(): int
     {
         $this->assertInParentProcess();
         
@@ -150,29 +146,23 @@ class BackgroundWorkerManager implements EventDispatcherInterface
         return count($this->failedProcesses);
     }
     
-    public function hasMoreWork()
+    public function hasMoreWork(): bool
     {
         return count($this->runningProcesses) < $this->numberOfConcurrentWorkers
                && count($this->pendingWorkers) > 0;
     }
     
-    /**
-     * @return int
-     */
-    public function getNumberOfConcurrentWorkers()
+    public function getNumberOfConcurrentWorkers(): int
     {
         return $this->numberOfConcurrentWorkers;
     }
     
-    /**
-     * @param int $numberOfConcurrentWorkers
-     */
-    public function setNumberOfConcurrentWorkers($numberOfConcurrentWorkers)
+    public function setNumberOfConcurrentWorkers(int $numberOfConcurrentWorkers): void
     {
         $this->numberOfConcurrentWorkers = $numberOfConcurrentWorkers;
     }
     
-    protected function executeWorker()
+    protected function executeWorker(): void
     {
         $this->assertInParentProcess();
         
@@ -202,7 +192,7 @@ class BackgroundWorkerManager implements EventDispatcherInterface
         }
     }
     
-    protected function assertInParentProcess()
+    protected function assertInParentProcess(): void
     {
         if (getmypid() != $this->parentProcessId) {
             throw new \RuntimeException("Cannot run a command runner in children processes");

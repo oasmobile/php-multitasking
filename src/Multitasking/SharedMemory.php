@@ -10,25 +10,20 @@ namespace Oasis\Mlib\Multitasking;
 
 class SharedMemory
 {
-    protected $id;
-    protected $key;
-    protected $sem;
+    protected readonly string $id;
+    protected readonly int $key;
+    protected readonly Semaphore $sem;
 
-    protected $mem;
+    protected \SysvSharedMemory|null $mem = null;
 
-    /**
-     * SharedMemory constructor.
-     *
-     * @param string $id
-     */
-    public function __construct($id)
+    public function __construct(string $id)
     {
         $this->id  = $id;
         $this->key = hexdec(substr(md5(md5($id) . "oasis-shared-memory"), 0, 8));
         $this->sem = new Semaphore(__CLASS__ . "#" . $id);
     }
 
-    public function close()
+    public function close(): void
     {
         if ($this->mem) {
             $this->sem->acquire();
@@ -41,14 +36,14 @@ class SharedMemory
         }
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         if (!$this->mem) {
             $this->mem = shm_attach($this->key);
         }
     }
 
-    public function remove()
+    public function remove(): void
     {
         $this->initialize();
         mdebug("Removing shared memory, key = %s", $this->key);
@@ -64,7 +59,7 @@ class SharedMemory
 
     }
 
-    public function set($key, $value)
+    public function set(string|int $key, mixed $value): bool
     {
         $this->initialize();
         return $this->sem->withLock(function () use ($key, $value) {
@@ -73,7 +68,7 @@ class SharedMemory
         });
     }
 
-    public function get($key)
+    public function get(string|int $key): mixed
     {
         $this->initialize();
 
@@ -89,7 +84,7 @@ class SharedMemory
         });
     }
 
-    public function has($key)
+    public function has(string|int $key): bool
     {
         $this->initialize();
 
@@ -99,7 +94,7 @@ class SharedMemory
         });
     }
 
-    public function delete($key)
+    public function delete(string|int $key): bool
     {
         $this->initialize();
 
@@ -109,7 +104,7 @@ class SharedMemory
         });
     }
 
-    public function actOnKey($key, callable $callback)
+    public function actOnKey(string|int $key, callable $callback): mixed
     {
         $this->initialize();
 
@@ -129,7 +124,7 @@ class SharedMemory
         );
     }
 
-    protected function translateKeyToInteger($key)
+    protected function translateKeyToInteger(string|int $key): int
     {
         return hexdec(substr(md5($key), 0, 8));
     }

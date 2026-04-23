@@ -10,18 +10,13 @@ namespace Oasis\Mlib\Multitasking;
 
 class WorkerInfo
 {
-    /** @var string */
-    private $id;
+    private readonly string $id;
     /** @var callable */
     private $worker;
-    /** @var int */
-    private $currentWorkerIndex = null;
-    /** @var int */
-    private $totalWorkers = null;
-    /** @var int */
-    private $numberOfConcurrentWorkers = null;
-    /** @var int */
-    private $exitStatus = null;
+    private ?int $currentWorkerIndex = null;
+    private ?int $totalWorkers = null;
+    private ?int $numberOfConcurrentWorkers = null;
+    private ?int $exitStatus = null;
     
     public function __construct(callable $worker)
     {
@@ -29,82 +24,52 @@ class WorkerInfo
         $this->worker = $worker;
     }
     
-    /**
-     * @return int
-     */
-    public function getCurrentWorkerIndex()
+    public function getCurrentWorkerIndex(): ?int
     {
         return $this->currentWorkerIndex;
     }
     
-    /**
-     * @param int $currentWorkerIndex
-     */
-    public function setCurrentWorkerIndex($currentWorkerIndex)
+    public function setCurrentWorkerIndex(int $currentWorkerIndex): void
     {
         $this->currentWorkerIndex = $currentWorkerIndex;
     }
     
-    /**
-     * @return int
-     */
-    public function getExitStatus()
+    public function getExitStatus(): ?int
     {
         return $this->exitStatus;
     }
     
-    /**
-     * @param int $exitStatus
-     */
-    public function setExitStatus( $exitStatus)
+    public function setExitStatus(int $exitStatus): void
     {
         $this->exitStatus = $exitStatus;
     }
     
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
     
-    /**
-     * @return int
-     */
-    public function getNumberOfConcurrentWorkers()
+    public function getNumberOfConcurrentWorkers(): ?int
     {
         return $this->numberOfConcurrentWorkers;
     }
     
-    /**
-     * @param int $numberOfConcurrentWorkers
-     */
-    public function setNumberOfConcurrentWorkers( $numberOfConcurrentWorkers)
+    public function setNumberOfConcurrentWorkers(int $numberOfConcurrentWorkers): void
     {
         $this->numberOfConcurrentWorkers = $numberOfConcurrentWorkers;
     }
     
-    /**
-     * @return int
-     */
-    public function getTotalWorkers()
+    public function getTotalWorkers(): ?int
     {
         return $this->totalWorkers;
     }
     
-    /**
-     * @param int $totalWorkers
-     */
-    public function setTotalWorkers( $totalWorkers)
+    public function setTotalWorkers(int $totalWorkers): void
     {
         $this->totalWorkers = $totalWorkers;
     }
     
-    /**
-     * @return callable
-     */
-    public function getWorker()
+    public function getWorker(): callable
     {
         return $this->worker;
     }

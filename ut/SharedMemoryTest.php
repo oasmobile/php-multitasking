@@ -8,18 +8,18 @@ use Oasis\Mlib\Multitasking\SharedMemory;
  * Date: 2016-09-01
  * Time: 21:07
  */
-class SharedMemoryTest extends PHPUnit_Framework_TestCase
+class SharedMemoryTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  SharedMemory */
     protected $memory;
     
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->memory = new SharedMemory(__FILE__);
     }
     
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->memory->remove();
@@ -34,9 +34,14 @@ class SharedMemoryTest extends PHPUnit_Framework_TestCase
     
     public function testSerialization()
     {
-        $this->memory->set('abc', new Memcached());
+        $obj = new \stdClass();
+        $obj->key = 'value';
+        $obj->num = 42;
+        $this->memory->set('abc', $obj);
         $val = $this->memory->get('abc');
-        self::assertInstanceOf(Memcached::class, $val);
+        self::assertInstanceOf(\stdClass::class, $val);
+        self::assertEquals('value', $val->key);
+        self::assertEquals(42, $val->num);
     }
     
     public function testExistenceCheckAndDelete()

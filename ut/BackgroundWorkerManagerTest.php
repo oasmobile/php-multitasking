@@ -10,7 +10,7 @@ use Oasis\Mlib\Multitasking\WorkerManagerCompletedEvent;
  * Date: 2016-08-30
  * Time: 15:23
  */
-class BackgroundWorkerManagerTest extends PHPUnit_Framework_TestCase
+class BackgroundWorkerManagerTest extends \PHPUnit\Framework\TestCase
 {
     public function testNormalRun()
     {
