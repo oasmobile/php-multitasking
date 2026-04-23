@@ -72,7 +72,7 @@
   - [x] 5.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [-] 6. PHP 8 现代化 — WorkerInfo
+- [x] 6. PHP 8 现代化 — WorkerInfo
   - [x] 6.1 为属性添加类型声明：`$id: string`、`$currentWorkerIndex: ?int`、`$totalWorkers: ?int`、`$numberOfConcurrentWorkers: ?int`、`$exitStatus: ?int`；`$worker` 保留无原生类型 + `@var callable` PHPDoc
     - _Ref: Requirement 3, AC 1-2_
   - [x] 6.2 将 `$id` 标记为 `readonly`（构造后不变）；`$worker` 不标记 readonly（无原生类型的属性不能声明 readonly）
@@ -85,39 +85,39 @@
     - _Ref: Requirement 8, AC 4_
   - [x] 6.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [-] 6.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
+  - [x] 6.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 11, AC 1-2, 5_
 
-- [ ] 7. PHP 8 现代化 — WorkerManagerCompletedEvent
-  - [ ] 7.1 为属性添加类型声明：`$successfulWorkers: array`、`$failedWorkers: array`
+- [x] 7. PHP 8 现代化 — WorkerManagerCompletedEvent
+  - [x] 7.1 为属性添加类型声明：`$successfulWorkers: array`、`$failedWorkers: array`
     - _Ref: Requirement 3, AC 1, 3_
-  - [ ] 7.2 将 `$successfulWorkers`、`$failedWorkers` 标记为 `readonly`（构造后不变）
+  - [x] 7.2 将 `$successfulWorkers`、`$failedWorkers` 标记为 `readonly`（构造后不变）
     - _Ref: Requirement 7, AC 1, 3_
-  - [ ] 7.3 为构造函数参数添加类型：`__construct(array $successfulWorkers, array $failedWorkers)`；为公共方法添加返回类型：`isSuccessful(): bool`、`getFailedWorkers(): array`、`getSuccessfulWorkers(): array`
+  - [x] 7.3 为构造函数参数添加类型：`__construct(array $successfulWorkers, array $failedWorkers)`；为公共方法添加返回类型：`isSuccessful(): bool`、`getFailedWorkers(): array`、`getSuccessfulWorkers(): array`
     - _Ref: Requirement 5, AC 1, 3-4_
-  - [ ] 7.4 确认不使用 constructor promotion（design 决策：`parent::__construct()` 调用在构造器体内，为清晰起见不使用 promotion）
+  - [x] 7.4 确认不使用 constructor promotion（design 决策：`parent::__construct()` 调用在构造器体内，为清晰起见不使用 promotion）
     - _Ref: Requirement 4, AC 1_
-  - [ ] 7.5 保留 `@var WorkerInfo[]` PHPDoc 注释（泛型信息，原生 `array` 无法表达）
+  - [x] 7.5 保留 `@var WorkerInfo[]` PHPDoc 注释（泛型信息，原生 `array` 无法表达）
     - _Ref: Requirement 8, AC 4_
-  - [ ] 7.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
+  - [x] 7.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [ ] 7.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
+  - [x] 7.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [ ] 8. PHP 8 现代化 — BackgroundWorkerManager
-  - [ ] 8.1 为所有属性添加类型声明：`$parentProcessId: int`、`$numberOfConcurrentWorkers: int`、`$pendingWorkers: array`、`$runningProcesses: array`、`$successfulProcesses: array`、`$failedProcesses: array`、`$startedWorkerCount: int`、`$totalWorkerCount: int`
+- [-] 8. PHP 8 现代化 — BackgroundWorkerManager
+  - [x] 8.1 为所有属性添加类型声明：`$parentProcessId: int`、`$numberOfConcurrentWorkers: int`、`$pendingWorkers: array`、`$runningProcesses: array`、`$successfulProcesses: array`、`$failedProcesses: array`、`$startedWorkerCount: int`、`$totalWorkerCount: int`
     - _Ref: Requirement 3, AC 1, 3_
-  - [ ] 8.2 将 `$parentProcessId` 标记为 `readonly`（构造后不变）；`$numberOfConcurrentWorkers` 不标记 readonly（有公共 setter）
+  - [x] 8.2 将 `$parentProcessId` 标记为 `readonly`（构造后不变）；`$numberOfConcurrentWorkers` 不标记 readonly（有公共 setter）
     - _Ref: Requirement 7, AC 1, 3_
-  - [ ] 8.3 为构造函数参数添加类型：`__construct(int $numberOfConcurrentWorkers = 1)`；为所有公共/保护方法添加参数类型和返回类型：`addWorker(callable $worker, int $count = 1): array`、`run(): int`、`wait(): int`、`hasMoreWork(): bool`、`getNumberOfConcurrentWorkers(): int`、`setNumberOfConcurrentWorkers(int $numberOfConcurrentWorkers): void`、`executeWorker(): void`、`assertInParentProcess(): void`
+  - [x] 8.3 为构造函数参数添加类型：`__construct(int $numberOfConcurrentWorkers = 1)`；为所有公共/保护方法添加参数类型和返回类型：`addWorker(callable $worker, int $count = 1): array`、`run(): int`、`wait(): int`、`hasMoreWork(): bool`、`getNumberOfConcurrentWorkers(): int`、`setNumberOfConcurrentWorkers(int $numberOfConcurrentWorkers): void`、`executeWorker(): void`、`assertInParentProcess(): void`
     - _Ref: Requirement 5, AC 1-4; Requirement 11, AC 3-4_
-  - [ ] 8.4 确认不使用 constructor promotion（design 决策：`$parentProcessId` 由 `getmypid()` 计算）
+  - [x] 8.4 确认不使用 constructor promotion（design 决策：`$parentProcessId` 由 `getmypid()` 计算）
     - _Ref: Requirement 4, AC 1_
-  - [ ] 8.5 保留 `@var WorkerInfo[]` PHPDoc 注释（泛型信息）；移除纯类型注释
+  - [x] 8.5 保留 `@var WorkerInfo[]` PHPDoc 注释（泛型信息）；移除纯类型注释
     - _Ref: Requirement 8, AC 4_
-  - [ ] 8.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
+  - [x] 8.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [ ] 8.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试通过（全部 6 个源文件现代化完成），commit
+  - [-] 8.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试通过（全部 6 个源文件现代化完成），commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
 - [ ] 9. PBT — SharedMemory round-trip
