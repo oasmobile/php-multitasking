@@ -8,18 +8,18 @@ use Oasis\Mlib\Multitasking\MessageQueue;
  * Date: 2016-09-01
  * Time: 18:18
  */
-class MessageQueueTest extends PHPUnit_Framework_TestCase
+class MessageQueueTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  MessageQueue */
     protected $queue;
     
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->queue = new MessageQueue(__FILE__);
     }
     
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->queue->remove();
@@ -57,19 +57,22 @@ class MessageQueueTest extends PHPUnit_Framework_TestCase
     }
 
 
-    /**
-     * @small
-     */
     public function testNonBlockingReceive()
     {
-        $this->queue->receive($msg, $type, 0, false);
+        $ret = $this->queue->receive($msg, $type, 0, false);
+        self::assertFalse($ret);
     }
-    
+
     public function testSerialization()
     {
-        $this->queue->send(new Memcached());
+        $obj = new \stdClass();
+        $obj->key = 'value';
+        $obj->num = 42;
+        $this->queue->send($obj);
         $this->queue->receive($msg, $type);
-        self::assertInstanceOf(Memcached::class, $msg);
+        self::assertInstanceOf(\stdClass::class, $msg);
+        self::assertEquals('value', $msg->key);
+        self::assertEquals(42, $msg->num);
     }
     
     public function testMessageType()

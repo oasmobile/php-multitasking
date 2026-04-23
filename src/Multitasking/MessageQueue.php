@@ -10,20 +10,14 @@ namespace Oasis\Mlib\Multitasking;
 
 class MessageQueue
 {
-    protected $id;
-    protected $key;
-    protected $sem;
-    protected $messageSizeLimit;
+    protected readonly string $id;
+    protected readonly int $key;
+    protected readonly Semaphore $sem;
+    protected readonly int $messageSizeLimit;
 
-    protected $queue;
+    protected \SysvMessageQueue|null $queue = null;
 
-    /**
-     * MessageQueue constructor.
-     *
-     * @param string $id
-     * @param int    $messageSizeLimit
-     */
-    public function __construct($id, $messageSizeLimit = 2048)
+    public function __construct(string $id, int $messageSizeLimit = 2048)
     {
         $this->id               = $id;
         $this->key              = hexdec(substr(md5(md5($id) . "oasis-msg-queue"), 0, 8));
@@ -31,7 +25,7 @@ class MessageQueue
         $this->messageSizeLimit = $messageSizeLimit;
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         if (!$this->queue) {
             $this->queue = msg_get_queue($this->key);
@@ -48,7 +42,7 @@ class MessageQueue
         }
     }
 
-    public function send($msg, $type = 1, $blocking = true)
+    public function send(mixed $msg, int $type = 1, bool $blocking = true): bool
     {
         if ($type <= 0) {
             throw new \InvalidArgumentException("Message type should be a positive integer!");
@@ -81,7 +75,7 @@ class MessageQueue
         return $ret;
     }
 
-    public function receive(&$receivedMessage, &$receivedType, $expectedType = 0, $blocking = true)
+    public function receive(mixed &$receivedMessage, mixed &$receivedType, int $expectedType = 0, bool $blocking = true): bool
     {
         $this->initialize();
 
@@ -104,7 +98,7 @@ class MessageQueue
             ))
             ) {
                 if (MSG_ENOMSG == $errorCode) {
-//                    minfo("Queue is empty, no message of desired type %d, errno = %d", $expectedType, $errorCode);
+                    // [review-skip] 空队列是正常场景，静默处理避免日志噪音
                 } else {
                     throw new \RuntimeException(
                         sprintf(
@@ -122,7 +116,7 @@ class MessageQueue
         return $ret;
     }
 
-    public function remove()
+    public function remove(): void
     {
         $this->initialize();
         mnotice("Removing message queue, key = %s", $this->key);
