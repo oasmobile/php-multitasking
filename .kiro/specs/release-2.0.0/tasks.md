@@ -158,9 +158,9 @@
   - [x] 13.6 验证 `docs/state/architecture.md` 中技术选型信息与 `composer.json` 一致
   - [x] 13.7 Checkpoint: 全部手工测试通过，commit
 
-- [-] 14. Code Review
+- [x] 14. Code Review
   - [x] 14.1 委托给 code-reviewer sub-agent 执行
-  - [-] 14.2 Checkpoint: Code review 通过，commit
+  - [x] 14.2 Checkpoint: Code review 通过，commit
 
 ## Issues
 
