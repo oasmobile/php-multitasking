@@ -8,20 +8,20 @@
 
 ## Tasks
 
-- [ ] 1. Composer 依赖版本升级
-  - [ ] 1.1 修改 `composer.json`：`require.php` 从 `>=5.6.1` 改为 `>=8.2`；`require-dev.phpunit/phpunit` 从 `^5.5` 改为 `^11.0`；新增 `require-dev.giorgiosironi/eris`: `^0.14.0`；保留现有 `require` 依赖（`ext-pcntl`、`oasis/logging`、`oasis/event`）不变
+- [x] 1. Composer 依赖版本升级
+  - [x] 1.1 修改 `composer.json`：`require.php` 从 `>=5.6.1` 改为 `>=8.2`；`require-dev.phpunit/phpunit` 从 `^5.5` 改为 `^11.0`；新增 `require-dev.giorgiosironi/eris`: `^0.14.0`；保留现有 `require` 依赖（`ext-pcntl`、`oasis/logging`、`oasis/event`）不变
     - _Ref: Requirement 1, AC 1-4_
-  - [ ] 1.2 执行 `composer update` 确认依赖解析无冲突
+  - [x] 1.2 执行 `composer update` 确认依赖解析无冲突
     - _Ref: Requirement 1, AC 5_
-  - [ ] 1.3 Checkpoint: 执行 `composer install` 确认无冲突，commit
+  - [x] 1.3 Checkpoint: 执行 `composer install` 确认无冲突，commit
 
-- [ ] 2. PHPUnit 配置与测试基类适配
-  - [ ] 2.1 更新 `phpunit.xml` 至 PHPUnit 11 schema：`xsi:noNamespaceSchemaLocation` 更新为 `vendor/phpunit/phpunit/phpunit.xsd`；移除 `enforceTimeLimit` 属性（PHPUnit 11 已移除）；testsuite 从逐文件 `<file>` 列举改为 `<directory>ut</directory>`（PHPUnit 默认匹配 `*Test.php` 后缀）
+- [-] 2. PHPUnit 配置与测试基类适配
+  - [x] 2.1 更新 `phpunit.xml` 至 PHPUnit 11 schema：`xsi:noNamespaceSchemaLocation` 更新为 `vendor/phpunit/phpunit/phpunit.xsd`；移除 `enforceTimeLimit` 属性（PHPUnit 11 已移除）；testsuite 从逐文件 `<file>` 列举改为 `<directory>ut</directory>`（PHPUnit 默认匹配 `*Test.php` 后缀）
     - _Ref: Requirement 2, AC 1_
-  - [ ] 2.2 适配 4 个测试文件的 PHPUnit 11 基类：`ut/BackgroundWorkerManagerTest.php`、`ut/SemaphoreTest.php`、`ut/MessageQueueTest.php`、`ut/SharedMemoryTest.php` — 基类从 `PHPUnit_Framework_TestCase` 改为 `PHPUnit\Framework\TestCase`；`setUp()` / `tearDown()` 添加 `: void` 返回类型
+  - [x] 2.2 适配 4 个测试文件的 PHPUnit 11 基类：`ut/BackgroundWorkerManagerTest.php`、`ut/SemaphoreTest.php`、`ut/MessageQueueTest.php`、`ut/SharedMemoryTest.php` — 基类从 `PHPUnit_Framework_TestCase` 改为 `PHPUnit\Framework\TestCase`；`setUp()` / `tearDown()` 添加 `: void` 返回类型
     - _Ref: Requirement 2, AC 2-3_
-  - [ ] 2.3 确认 `ut/bootstrap.php` autoload 路径正确，无需结构性变更
-  - [ ] 2.4 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部现有测试通过，commit
+  - [x] 2.3 确认 `ut/bootstrap.php` autoload 路径正确，无需结构性变更
+  - [-] 2.4 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部现有测试通过，commit
     - _Ref: Requirement 2, AC 4_
 
 - [ ] 3. PHP 8 现代化 — Semaphore

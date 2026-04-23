@@ -8,7 +8,7 @@ use Oasis\Mlib\Multitasking\Semaphore;
  * Date: 2016-08-31
  * Time: 20:27
  */
-class SemaphoreTest extends PHPUnit_Framework_TestCase
+class SemaphoreTest extends \PHPUnit\Framework\TestCase
 {
     public function testNormalCase()
     {

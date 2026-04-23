@@ -8,18 +8,18 @@ use Oasis\Mlib\Multitasking\MessageQueue;
  * Date: 2016-09-01
  * Time: 18:18
  */
-class MessageQueueTest extends PHPUnit_Framework_TestCase
+class MessageQueueTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  MessageQueue */
     protected $queue;
     
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->queue = new MessageQueue(__FILE__);
     }
     
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->queue->remove();
@@ -57,9 +57,6 @@ class MessageQueueTest extends PHPUnit_Framework_TestCase
     }
 
 
-    /**
-     * @small
-     */
     public function testNonBlockingReceive()
     {
         $this->queue->receive($msg, $type, 0, false);
