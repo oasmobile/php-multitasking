@@ -166,7 +166,7 @@
 
 （stabilize 阶段发现的 issue）
 
-### Fixed in v2.0.0-alpha1
+### Fixed in v2.0.0
 
 1. **eris ^0.14.0 在 PHP 8.5 上产生 deprecation warning** — eris 0.14.x 内部使用 implicit nullable parameter，PHP 8.5 将其标记为 deprecated。升级 eris 至 `^1.0`（实际安装 1.1.0）解决。同步更新 `composer.json`、`docs/state/architecture.md`。
 2. **testSerialization 依赖 ext-memcached** — `MessageQueueTest::testSerialization` 和 `SharedMemoryTest::testSerialization` 使用 `new Memcached()` 作为序列化测试对象，但 `ext-memcached` 不是项目依赖。改用 `stdClass` 替代，测试意图不变。

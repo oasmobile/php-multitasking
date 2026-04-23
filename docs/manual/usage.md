@@ -10,7 +10,7 @@
 composer require oasis/multitasking
 ```
 
-需要 PHP ≥ 5.6.1 及 `ext-pcntl` 扩展（仅 Linux / macOS）。
+需要 PHP ≥ 8.2 及 `ext-pcntl` 扩展（仅 Linux / macOS）。
 
 ---
 
