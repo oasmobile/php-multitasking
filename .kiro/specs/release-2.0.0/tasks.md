@@ -120,19 +120,19 @@
   - [x] 8.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试通过（全部 6 个源文件现代化完成），commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [-] 9. PBT — SharedMemory round-trip
+- [x] 9. PBT — SharedMemory round-trip
   - [x] 9.1 创建 `ut/SharedMemoryPbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `SharedMemory` 实例（使用唯一 ID 确保隔离），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
     - _Ref: Requirement 9, AC 1-2_
   - [x] 9.2 编写 Property 1: SharedMemory round-trip 属性测试 — 使用 `forAll(Generator\string(), Generator\oneOf(Generator\int(), Generator\string(), Generator\bool(), Generator\float()))` 生成随机 key-value；验证 `set(key, value)` → `get(key)` === `value`（跳过空 key，每次迭代后 `delete(key)` 清理）
     - _Ref: Requirement 9, AC 2_
-  - [-] 9.3 Checkpoint: 执行 `vendor/bin/phpunit --filter SharedMemoryPbtTest` 确认通过，commit
+  - [x] 9.3 Checkpoint: 执行 `vendor/bin/phpunit --filter SharedMemoryPbtTest` 确认通过，commit
 
-- [ ] 10. PBT — MessageQueue round-trip
-  - [ ] 10.1 创建 `ut/MessageQueuePbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `MessageQueue` 实例（使用唯一 ID），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
+- [-] 10. PBT — MessageQueue round-trip
+  - [x] 10.1 创建 `ut/MessageQueuePbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `MessageQueue` 实例（使用唯一 ID），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
     - _Ref: Requirement 9, AC 1, 3_
-  - [ ] 10.2 编写 Property 2: MessageQueue round-trip 属性测试 — 使用 `forAll(Generator\oneOf(Generator\int(), Generator\string(), Generator\bool()))` 生成随机消息；验证 `send(msg)` → `receive()` 返回的消息等于原始 `msg`
+  - [x] 10.2 编写 Property 2: MessageQueue round-trip 属性测试 — 使用 `forAll(Generator\oneOf(Generator\int(), Generator\string(), Generator\bool()))` 生成随机消息；验证 `send(msg)` → `receive()` 返回的消息等于原始 `msg`
     - _Ref: Requirement 9, AC 3_
-  - [ ] 10.3 Checkpoint: 执行 `vendor/bin/phpunit --filter MessageQueuePbtTest` 确认通过，commit
+  - [-] 10.3 Checkpoint: 执行 `vendor/bin/phpunit --filter MessageQueuePbtTest` 确认通过，commit
 
 - [ ] 11. PBT — Semaphore idempotence
   - [ ] 11.1 创建 `ut/SemaphorePbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `Semaphore` 实例（使用唯一 ID），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
