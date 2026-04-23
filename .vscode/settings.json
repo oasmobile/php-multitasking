@@ -1,0 +1,9 @@
+{
+    "php.stubs": [
+        "pcntl",
+        "posix",
+        "sem",
+        "shmop",
+        "*"
+    ]
+}
