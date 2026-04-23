@@ -56,7 +56,7 @@
   - [x] 4.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [-] 5. PHP 8 现代化 — SharedMemory
+- [x] 5. PHP 8 现代化 — SharedMemory
   - [x] 5.1 为所有属性添加类型声明：`$id: string`、`$key: int`、`$sem: Semaphore`、`$mem: \SysvSharedMemory|null`
     - _Ref: Requirement 3, AC 1-3; Requirement 5, AC 2_
   - [x] 5.2 将 `$id`、`$key`、`$sem` 标记为 `readonly`（构造后不变）
@@ -69,23 +69,23 @@
     - _Ref: Requirement 8, AC 4_
   - [x] 5.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [-] 5.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
+  - [x] 5.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [ ] 6. PHP 8 现代化 — WorkerInfo
-  - [ ] 6.1 为属性添加类型声明：`$id: string`、`$currentWorkerIndex: ?int`、`$totalWorkers: ?int`、`$numberOfConcurrentWorkers: ?int`、`$exitStatus: ?int`；`$worker` 保留无原生类型 + `@var callable` PHPDoc
+- [-] 6. PHP 8 现代化 — WorkerInfo
+  - [x] 6.1 为属性添加类型声明：`$id: string`、`$currentWorkerIndex: ?int`、`$totalWorkers: ?int`、`$numberOfConcurrentWorkers: ?int`、`$exitStatus: ?int`；`$worker` 保留无原生类型 + `@var callable` PHPDoc
     - _Ref: Requirement 3, AC 1-2_
-  - [ ] 6.2 将 `$id` 标记为 `readonly`（构造后不变）；`$worker` 不标记 readonly（无原生类型的属性不能声明 readonly）
+  - [x] 6.2 将 `$id` 标记为 `readonly`（构造后不变）；`$worker` 不标记 readonly（无原生类型的属性不能声明 readonly）
     - _Ref: Requirement 7, AC 1, 3_
-  - [ ] 6.3 为所有 getter 添加返回类型、所有 setter 添加参数类型和 `void` 返回类型
+  - [x] 6.3 为所有 getter 添加返回类型、所有 setter 添加参数类型和 `void` 返回类型
     - _Ref: Requirement 5, AC 1, 3-4_
-  - [ ] 6.4 确认不使用 constructor promotion（design 决策：`$id` 由计算生成，`$worker` 类型受限）
+  - [x] 6.4 确认不使用 constructor promotion（design 决策：`$id` 由计算生成，`$worker` 类型受限）
     - _Ref: Requirement 4, AC 1_
-  - [ ] 6.5 移除纯类型 PHPDoc 注释；保留 `$worker` 的 `@var callable` 注释
+  - [x] 6.5 移除纯类型 PHPDoc 注释；保留 `$worker` 的 `@var callable` 注释
     - _Ref: Requirement 8, AC 4_
-  - [ ] 6.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
+  - [x] 6.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [ ] 6.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
+  - [-] 6.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 11, AC 1-2, 5_
 
 - [ ] 7. PHP 8 现代化 — WorkerManagerCompletedEvent
