@@ -28,6 +28,7 @@ class Semaphore
         $this->maxAcquire = $maxAcquire;
     }
 
+    // [review-skip] 空析构函数保留，避免 PHP 默认析构行为干扰信号量资源
     function __destruct()
     {
     }
@@ -97,10 +98,8 @@ class Semaphore
     private function debug(string $format, mixed ...$args): void
     {
         static $logDebug = null;
-        if ($logDebug === null && \getenv('DEBUG_OASIS_MULTITASKING')) {
-            $logDebug = true;
-        } else {
-            $logDebug = false;
+        if ($logDebug === null) {
+            $logDebug = (bool)\getenv('DEBUG_OASIS_MULTITASKING');
         }
         if ($logDebug) {
             \call_user_func_array("mdebug", [$format, ...$args]);

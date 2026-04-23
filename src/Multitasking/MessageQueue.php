@@ -98,7 +98,7 @@ class MessageQueue
             ))
             ) {
                 if (MSG_ENOMSG == $errorCode) {
-//                    minfo("Queue is empty, no message of desired type %d, errno = %d", $expectedType, $errorCode);
+                    // [review-skip] 空队列是正常场景，静默处理避免日志噪音
                 } else {
                     throw new \RuntimeException(
                         sprintf(
