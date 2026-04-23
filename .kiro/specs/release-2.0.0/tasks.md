@@ -134,20 +134,20 @@
     - _Ref: Requirement 9, AC 3_
   - [x] 10.3 Checkpoint: 执行 `vendor/bin/phpunit --filter MessageQueuePbtTest` 确认通过，commit
 
-- [-] 11. PBT — Semaphore idempotence
+- [x] 11. PBT — Semaphore idempotence
   - [x] 11.1 创建 `ut/SemaphorePbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `Semaphore` 实例（使用唯一 ID），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
     - _Ref: Requirement 9, AC 1, 4_
   - [x] 11.2 编写 Property 3: Semaphore idempotence 属性测试 — 使用 `forAll(Generator\choose(1, 50))` 生成随机循环次数 `n`；验证 `n` 次 acquire/release 循环后，仍可成功 acquire/release
     - _Ref: Requirement 9, AC 4_
-  - [-] 11.3 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试（现有 + PBT）通过，commit
+  - [x] 11.3 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试（现有 + PBT）通过，commit
     - _Ref: Requirement 9, AC 5_
 
-- [ ] 12. SSOT 文档更新
-  - [ ] 12.1 更新 `docs/state/architecture.md`：技术选型表 PHP 版本 `>=5.6.1` → `>=8.2`、测试框架 `PHPUnit ^5.5` → `PHPUnit ^11.0`；新增 `giorgiosironi/eris ^0.14.0` 作为 dev 依赖；测试策略表移除 `enforceTimeLimit` 描述、新增 PBT 测试说明
+- [-] 12. SSOT 文档更新
+  - [x] 12.1 更新 `docs/state/architecture.md`：技术选型表 PHP 版本 `>=5.6.1` → `>=8.2`、测试框架 `PHPUnit ^5.5` → `PHPUnit ^11.0`；新增 `giorgiosironi/eris ^0.14.0` 作为 dev 依赖；测试策略表移除 `enforceTimeLimit` 描述、新增 PBT 测试说明
     - _Ref: Requirement 10, AC 1-3_
-  - [ ] 12.2 更新 `docs/state/api.md`：反映各类构造函数和方法签名中新增的类型声明（参数类型、返回类型）；反映 readonly 属性变更；确认不记录任何行为变更（本次无行为变更）
+  - [x] 12.2 更新 `docs/state/api.md`：反映各类构造函数和方法签名中新增的类型声明（参数类型、返回类型）；反映 readonly 属性变更；确认不记录任何行为变更（本次无行为变更）
     - _Ref: Requirement 10, AC 4-5_
-  - [ ] 12.3 Checkpoint: 审查 SSOT 文档与代码一致性，commit
+  - [-] 12.3 Checkpoint: 审查 SSOT 文档与代码一致性，commit
 
 - [ ] 13. 手工测试 — Release Stabilize
   - [ ] 13.1 Increment alpha tag
