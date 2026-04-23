@@ -104,7 +104,7 @@
   - [x] 7.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认测试通过，commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [-] 8. PHP 8 现代化 — BackgroundWorkerManager
+- [x] 8. PHP 8 现代化 — BackgroundWorkerManager
   - [x] 8.1 为所有属性添加类型声明：`$parentProcessId: int`、`$numberOfConcurrentWorkers: int`、`$pendingWorkers: array`、`$runningProcesses: array`、`$successfulProcesses: array`、`$failedProcesses: array`、`$startedWorkerCount: int`、`$totalWorkerCount: int`
     - _Ref: Requirement 3, AC 1, 3_
   - [x] 8.2 将 `$parentProcessId` 标记为 `readonly`（构造后不变）；`$numberOfConcurrentWorkers` 不标记 readonly（有公共 setter）
@@ -117,15 +117,15 @@
     - _Ref: Requirement 8, AC 4_
   - [x] 8.6 顺带检查 `strpos`/`substr`/`switch`/named arguments 适用场景
     - _Ref: Requirement 6, AC 1-3; Requirement 8, AC 1-3_
-  - [-] 8.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试通过（全部 6 个源文件现代化完成），commit
+  - [x] 8.7 Checkpoint: 执行 `vendor/bin/phpunit` 确认全部测试通过（全部 6 个源文件现代化完成），commit
     - _Ref: Requirement 3, AC 4; Requirement 5, AC 5; Requirement 7, AC 4; Requirement 11, AC 1-2, 5_
 
-- [ ] 9. PBT — SharedMemory round-trip
-  - [ ] 9.1 创建 `ut/SharedMemoryPbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `SharedMemory` 实例（使用唯一 ID 确保隔离），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
+- [-] 9. PBT — SharedMemory round-trip
+  - [x] 9.1 创建 `ut/SharedMemoryPbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `SharedMemory` 实例（使用唯一 ID 确保隔离），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
     - _Ref: Requirement 9, AC 1-2_
-  - [ ] 9.2 编写 Property 1: SharedMemory round-trip 属性测试 — 使用 `forAll(Generator\string(), Generator\oneOf(Generator\int(), Generator\string(), Generator\bool(), Generator\float()))` 生成随机 key-value；验证 `set(key, value)` → `get(key)` === `value`（跳过空 key，每次迭代后 `delete(key)` 清理）
+  - [x] 9.2 编写 Property 1: SharedMemory round-trip 属性测试 — 使用 `forAll(Generator\string(), Generator\oneOf(Generator\int(), Generator\string(), Generator\bool(), Generator\float()))` 生成随机 key-value；验证 `set(key, value)` → `get(key)` === `value`（跳过空 key，每次迭代后 `delete(key)` 清理）
     - _Ref: Requirement 9, AC 2_
-  - [ ] 9.3 Checkpoint: 执行 `vendor/bin/phpunit --filter SharedMemoryPbtTest` 确认通过，commit
+  - [-] 9.3 Checkpoint: 执行 `vendor/bin/phpunit --filter SharedMemoryPbtTest` 确认通过，commit
 
 - [ ] 10. PBT — MessageQueue round-trip
   - [ ] 10.1 创建 `ut/MessageQueuePbtTest.php`：继承 `PHPUnit\Framework\TestCase`，`use Eris\TestTrait`；`setUp()` 中创建 `MessageQueue` 实例（使用唯一 ID），调用 `initialize()`；`tearDown()` 中调用 `remove()` 销毁资源
