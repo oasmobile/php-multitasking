@@ -14,8 +14,8 @@
 | 自动加载 | PSR-4（`src/` → `Oasis\Mlib\`） |
 | 进程管理 | `ext-pcntl`（`pcntl_fork` / `pcntl_waitpid`） |
 | IPC 原语 | System V（`sem_*` / `msg_*` / `shm_*`） |
-| 事件机制 | `oasis/event ^1.0`（`EventDispatcherInterface` / `EventDispatcherTrait`） |
-| 日志 | `oasis/logging ^1.1`（全局函数 `mdebug` / `minfo` / `mnotice` / `mwarning` / `merror`） |
+| 事件机制 | `oasis/event ^2.0`（`EventDispatcherInterface` / `EventDispatcherTrait`；目标线 `^3.0`，见 release 3.0.0 spec） |
+| 日志 | `oasis/logging ^3.0`（全局函数 `mdebug` / `minfo` / `mnotice` / `mwarning` / `merror`） |
 | 测试 | PHPUnit ^11.0 |
 | PBT | `giorgiosironi/eris ^1.0`（dev 依赖） |
 
