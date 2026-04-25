@@ -19,11 +19,21 @@ FILES=(
   .cursor/rules/doc/writing-conventions.mdc
   .cursor/rules/git/branch-overview.mdc
   .cursor/rules/git/git-conventions.mdc
+  .cursor/rules/graphify.mdc
   .cursor/rules/safety/command-safety.mdc
   .cursor/rules/safety/config-safety.mdc
   .cursor/rules/spec/manual-testing.mdc
   .cursor/rules/spec/spec-execution.mdc
+  .cursor/rules/spec/spec-goal.mdc
+  .cursor/rules/spec/spec-planning.mdc
   .cursor/rules/plugin/superpowers-integration.mdc
+
+  # Cursor skills
+  .cursor/skills/graphify/SKILL.md
+  .cursor/skills/graphify/references/incremental-and-modes.md
+  .cursor/skills/graphify/references/integrations.md
+  .cursor/skills/graphify/references/pipeline-steps.md
+  .cursor/skills/graphify/references/query-commands.md
 
   # Cursor sub-agents
   .cursor/agents/code-reviewer.md
@@ -39,7 +49,15 @@ FILES=(
   .kiro/agents/gitflow-starter.md
   .kiro/agents/spec-gatekeeper.md
 
+  # Kiro skills
+  .kiro/skills/graphify/SKILL.md
+  .kiro/skills/graphify/references/incremental-and-modes.md
+  .kiro/skills/graphify/references/integrations.md
+  .kiro/skills/graphify/references/pipeline-steps.md
+  .kiro/skills/graphify/references/query-commands.md
+
   # Kiro steering
+  .kiro/steering/graphify.md
   .kiro/steering/kiro-scope.md
   .kiro/steering/doc/writing-conventions.md
   .kiro/steering/git/branch-overview.md
