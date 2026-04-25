@@ -43,6 +43,8 @@ tools: ["read", "write", "shell"]
 
 先读项目 `AGENTS.md`，了解文档结构、读取优先级和约定。然后按需读取相关上下文——不要一次全部读取。
 
+如果 `<spec-dir>/<spec-name>/goal.md` 存在，读取其 Clarification 记录，确保 design 体现用户已做出的决策。
+
 ### 方案探索
 
 先调用 `brainstorming` skill 发散探索：澄清需求意图、发现隐含约束、列出可能的技术方向。然后收敛为 2–3 种方案并评估 trade-off，选择最简单可行的方案并说明理由。如果 proposal 或用户已指定技术选型，确认并细化而非推翻。

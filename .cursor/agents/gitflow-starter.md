@@ -136,5 +136,6 @@ tools: ["read", "write", "shell"]
 - 分支名称
 - 对于 feature：proposal 状态变更情况；附带 proposal 文件的完整路径
 - 对于 hotfix：关联的 issue 或 note 信息
+- 要求主 agent 参考 `spec-goal` 规则，按其流程完成 SSOT 分析、需求来源分析、Clarification、生成 `goal.md`（这一步自动执行，无需等待用户确认）
 
-本 agent 不启动 spec 工作流。报告完成后，建议主 agent 询问用户是否要开始写 spec。
+本 agent 不启动 spec 工作流，也不进行 clarification。
