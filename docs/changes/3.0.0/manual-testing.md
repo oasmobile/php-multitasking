@@ -1,6 +1,7 @@
 # 手工测试与 stabilize 复验（3.0.0）
 
-> Alpha tag: **`v3.0.0-alpha.1`**（打标时间以 `git show v3.0.0-alpha.1` 为准）
+> **Release tag（正式）**: **`v3.0.0`**（发布完成后以 `git show v3.0.0` 为准）  
+> Stabilize 预检 Alpha tag: **`v3.0.0-alpha.1`**（打标时间以 `git show v3.0.0-alpha.1` 为准；正式发版后该预发布 tag 可按团队策略删除）
 
 ---
 

@@ -87,8 +87,8 @@
 
 ## Definition of Done
 
-- [ ] `composer.json` 与 `composer.lock` 已稳定落地双 `^3.0`。
-- [ ] `src/` 与 `ut/` 的必要兼容改动完成，且不引入非必要行为变化。
-- [ ] 全量 `ut/` 通过。
-- [ ] 未引入任何 PHP 8.3+ 专属特性。
-- [ ] `PROJECT.md` 与 `docs/state/` 按真实落地结果完成同步（`api.md` 仅在签名变化时更新）。
+- [x] `composer.json` 与 `composer.lock` 已稳定落地双 `^3.0`。
+- [x] `src/` 与 `ut/` 的必要兼容改动完成，且不引入非必要行为变化。
+- [x] 全量 `ut/` 通过。
+- [x] 未引入任何 PHP 8.3+ 专属特性。
+- [x] `PROJECT.md` 与 `docs/state/` 按真实落地结果完成同步（`api.md` 仅在签名变化时更新）。
