@@ -28,7 +28,11 @@ class MessageQueue
     public function initialize(): void
     {
         if (!$this->queue) {
-            $this->queue = msg_get_queue($this->key);
+            $queue = msg_get_queue($this->key);
+            if ($queue === false) {
+                throw new \RuntimeException('msg_get_queue() failed for key=0x' . dechex($this->key));
+            }
+            $this->queue = $queue;
 
             $this->sem->acquire();
             try {
