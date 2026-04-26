@@ -57,14 +57,14 @@ worker 的元信息容器，由 `BackgroundWorkerManager` 创建并传入 worker
 | 属性 | 类型 | Readonly | 说明 |
 |------|------|----------|------|
 | `$id` | `string` | ✓ | 唯一 ID（md5 生成） |
-| `$worker` | _(无原生类型, `@var callable`)_ | | 原始 callable |
+| `$worker` | `\Closure` | ✓ | 由入参 `callable` 用 `Closure::fromCallable` 归一，便于类型表达 |
 
 ### 公共方法
 
 | 方法 | 返回类型 | 说明 |
 |------|----------|------|
 | `getId()` | `string` | 唯一 ID（md5 生成） |
-| `getWorker()` | `callable` | 原始 callable |
+| `getWorker()` | `callable` | 可调用对象（内部为 `Closure`） |
 | `getCurrentWorkerIndex()` | `?int` | 当前 worker 序号（0-based） |
 | `setCurrentWorkerIndex(int $currentWorkerIndex)` | `void` | 设置 worker 序号 |
 | `getTotalWorkers()` | `?int` | worker 总数 |
@@ -101,6 +101,8 @@ __construct(array $successfulWorkers, array $failedWorkers)
 | `getSuccessfulWorkers()` | `WorkerInfo[]` | 成功的 worker 列表 |
 | `getFailedWorkers()` | `WorkerInfo[]` | 失败的 worker 列表 |
 
+> `oasis/event` 3.x 下 `Event` 等基类契约以 vendor 为准；本库对完成事件的语义未改。
+
 ---
 
 ## Semaphore
@@ -131,6 +133,10 @@ __construct(string $id, int $maxAcquire = 1)
 | `remove` | `remove(): void` | 移除信号量 |
 | `getId` | `getId(): string` | 获取 ID |
 | `withLock` | `withLock(callable $callback): mixed` | 在锁内执行回调 |
+
+### 行为说明
+
+- `initialize()` 内部调用 `sem_get(..., true)`；若系统调用失败，抛 `RuntimeException`（避免将 `false` 赋给 `?\SysvSemaphore`）。
 
 ### 调试
 
@@ -165,6 +171,10 @@ __construct(string $id, int $messageSizeLimit = 2048)
 | `send` | `send(mixed $msg, int $type = 1, bool $blocking = true): bool` | 发送消息 |
 | `receive` | `receive(mixed &$receivedMessage, mixed &$receivedType, int $expectedType = 0, bool $blocking = true): bool` | 接收消息 |
 | `remove` | `remove(): void` | 移除队列及关联信号量 |
+
+### 行为说明
+
+- `initialize()` 在 `msg_get_queue()` 失败时抛 `RuntimeException`。
 
 ### 约束
 
@@ -203,6 +213,10 @@ __construct(string $id)
 | `has` | `has(string\|int $key): bool` | 是否存在 |
 | `delete` | `delete(string\|int $key): bool` | 删除 |
 | `actOnKey` | `actOnKey(string\|int $key, callable $callback): mixed` | 原子读-改-写 |
+
+### 行为说明
+
+- `initialize()` 在 `shm_attach()` 失败时抛 `RuntimeException`。
 
 ### 约束
 
