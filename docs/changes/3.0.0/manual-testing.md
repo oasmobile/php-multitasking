@@ -17,7 +17,7 @@
 | 步骤 | 命令 | 结果 |
 |------|------|------|
 | 干净安装 | `composer install --no-interaction` | 成功；lock 可复现、无依赖冲突 |
-| 全量测试 | `vendor/bin/phpunit` | **25 tests，2806 assertions，全部通过**；输出无 deprecation / 异常堆栈（以当次运行为准） |
+| 全量测试 | `vendor/bin/phpunit` | 在 **tag `v3.0.0-alpha.1` 上**：**25 tests，2817 assertions，全部通过**；输出无 deprecation / 异常堆栈；后续在分支顶端复跑时断言数可能因 PHPUnit/eris 迭代有小幅波动。 |
 
 ---
 
