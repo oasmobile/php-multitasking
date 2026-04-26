@@ -10,8 +10,7 @@ use Oasis\Mlib\Multitasking\SharedMemory;
  */
 class SharedMemoryTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var  SharedMemory */
-    protected $memory;
+    protected SharedMemory $memory;
     
     protected function setUp(): void
     {
@@ -25,14 +24,14 @@ class SharedMemoryTest extends \PHPUnit\Framework\TestCase
         $this->memory->remove();
     }
     
-    public function testSimpleSetGet()
+    public function testSimpleSetGet(): void
     {
         $this->memory->set('abc', 1234);
         $val = $this->memory->get('abc');
         self::assertEquals(1234, $val);
     }
     
-    public function testSerialization()
+    public function testSerialization(): void
     {
         $obj = new \stdClass();
         $obj->key = 'value';
@@ -44,7 +43,7 @@ class SharedMemoryTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(42, $val->num);
     }
     
-    public function testExistenceCheckAndDelete()
+    public function testExistenceCheckAndDelete(): void
     {
         $has = $this->memory->has('abc');
         self::assertFalse($has);
@@ -56,7 +55,7 @@ class SharedMemoryTest extends \PHPUnit\Framework\TestCase
         self::assertFalse($has);
     }
     
-    public function testSharedAcrossProcesses()
+    public function testSharedAcrossProcesses(): void
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'shared-memory-ut-');
         
@@ -84,13 +83,13 @@ class SharedMemoryTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(5678, file_get_contents($tempFile));
     }
 
-    public function testAccessingNonExistingKey()
+    public function testAccessingNonExistingKey(): void
     {
         $ret = $this->memory->get('non-existing-value');
         $this->assertNull($ret, "Non-existing value should return null");
     }
 
-    public function testActOnKeyWithExistingValue()
+    public function testActOnKeyWithExistingValue(): void
     {
         $this->memory->set('counter', 5);
 
@@ -102,7 +101,7 @@ class SharedMemoryTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(10, $this->memory->get('counter'));
     }
 
-    public function testActOnKeyWithNonExistingValue()
+    public function testActOnKeyWithNonExistingValue(): void
     {
         $result = $this->memory->actOnKey('non_existing_key', function ($value) {
             return $value === null ? 'new_value' : $value;
@@ -112,7 +111,7 @@ class SharedMemoryTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('new_value', $this->memory->get('non_existing_key'));
     }
 
-    public function testActOnKeyWithMultipleProcesses()
+    public function testActOnKeyWithMultipleProcesses(): void
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'shared-memory-ut-');
         $this->memory->set('counter', 0);

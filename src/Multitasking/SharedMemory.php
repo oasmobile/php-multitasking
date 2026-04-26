@@ -39,7 +39,11 @@ class SharedMemory
     public function initialize(): void
     {
         if (!$this->mem) {
-            $this->mem = shm_attach($this->key);
+            $mem = shm_attach($this->key);
+            if ($mem === false) {
+                throw new \RuntimeException('shm_attach() failed for key=0x' . dechex($this->key));
+            }
+            $this->mem = $mem;
         }
     }
 

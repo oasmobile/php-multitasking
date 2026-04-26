@@ -29,7 +29,7 @@ class Semaphore
     }
 
     // [review-skip] 空析构函数保留，避免 PHP 默认析构行为干扰信号量资源
-    function __destruct()
+    public function __destruct()
     {
     }
 
@@ -51,7 +51,11 @@ class Semaphore
     public function initialize(): void
     {
         $this->debug("Initializing semaphore %s with key: %x", $this->id, $this->key);
-        $this->sem = sem_get($this->key, $this->maxAcquire, 0666, 1);
+        $sem = sem_get($this->key, $this->maxAcquire, 0666, true);
+        if ($sem === false) {
+            throw new \RuntimeException('sem_get() failed for key=0x' . dechex($this->key));
+        }
+        $this->sem = $sem;
     }
 
     public function release(): void

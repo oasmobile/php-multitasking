@@ -11,8 +11,7 @@ namespace Oasis\Mlib\Multitasking;
 class WorkerInfo
 {
     private readonly string $id;
-    /** @var callable */
-    private $worker;
+    private readonly \Closure $worker;
     private ?int $currentWorkerIndex = null;
     private ?int $totalWorkers = null;
     private ?int $numberOfConcurrentWorkers = null;
@@ -21,7 +20,7 @@ class WorkerInfo
     public function __construct(callable $worker)
     {
         $this->id     = \md5(\sprintf("%s,%s,%s", \spl_object_hash($this), \microtime(true), \getmypid()));
-        $this->worker = $worker;
+        $this->worker = \Closure::fromCallable($worker);
     }
     
     public function getCurrentWorkerIndex(): ?int

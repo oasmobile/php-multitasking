@@ -10,8 +10,7 @@ use Oasis\Mlib\Multitasking\MessageQueue;
  */
 class MessageQueueTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var  MessageQueue */
-    protected $queue;
+    protected MessageQueue $queue;
     
     protected function setUp(): void
     {
@@ -25,7 +24,7 @@ class MessageQueueTest extends \PHPUnit\Framework\TestCase
         $this->queue->remove();
     }
     
-    public function testNormalSendAndReceive()
+    public function testNormalSendAndReceive(): void
     {
         $this->queue->send('abc');
         
@@ -34,7 +33,7 @@ class MessageQueueTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('abc', $msg);
     }
     
-    public function testSendAndReceiveInDifferentProcess()
+    public function testSendAndReceiveInDifferentProcess(): void
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'message-queue-ut-');
         
@@ -57,13 +56,13 @@ class MessageQueueTest extends \PHPUnit\Framework\TestCase
     }
 
 
-    public function testNonBlockingReceive()
+    public function testNonBlockingReceive(): void
     {
         $ret = $this->queue->receive($msg, $type, 0, false);
         self::assertFalse($ret);
     }
 
-    public function testSerialization()
+    public function testSerialization(): void
     {
         $obj = new \stdClass();
         $obj->key = 'value';
@@ -75,7 +74,7 @@ class MessageQueueTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(42, $msg->num);
     }
     
-    public function testMessageType()
+    public function testMessageType(): void
     {
         $this->queue->send('abc', 2);
         $this->queue->send('efg', 3);
