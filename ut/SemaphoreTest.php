@@ -10,7 +10,7 @@ use Oasis\Mlib\Multitasking\Semaphore;
  */
 class SemaphoreTest extends \PHPUnit\Framework\TestCase
 {
-    public function testNormalCase()
+    public function testNormalCase(): void
     {
         $sem = new Semaphore('');
         $acquired = $sem->acquire();
@@ -19,7 +19,7 @@ class SemaphoreTest extends \PHPUnit\Framework\TestCase
         $sem->remove();
     }
     
-    public function testMultipleProcess()
+    public function testMultipleProcess(): void
     {
         $sem      = new Semaphore('');
         $tempFile = tempnam(sys_get_temp_dir(), 'semaphore-ut-');
@@ -47,7 +47,7 @@ class SemaphoreTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('abcdef', file_get_contents($tempFile));
     }
     
-    public function testAutoRelease()
+    public function testAutoRelease(): void
     {
         $sem      = new Semaphore('');
         $tempFile = tempnam(sys_get_temp_dir(), 'semaphore-ut-');
@@ -74,7 +74,7 @@ class SemaphoreTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('abcdef', file_get_contents($tempFile));
     }
     
-    public function testNonBlockingMode()
+    public function testNonBlockingMode(): void
     {
         $sem      = new Semaphore('');
         $tempFile = tempnam(sys_get_temp_dir(), 'semaphore-ut-');
@@ -104,7 +104,7 @@ class SemaphoreTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('abcfedghi', file_get_contents($tempFile));
     }
 
-    public function testWithLock()
+    public function testWithLock(): void
     {
         $sem      = new Semaphore('');
         $tempFile = tempnam(sys_get_temp_dir(), 'semaphore-ut-');
@@ -132,7 +132,7 @@ class SemaphoreTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('abcdef', file_get_contents($tempFile));
     }
 
-    public function testWithLockReturnValue()
+    public function testWithLockReturnValue(): void
     {
         $sem = new Semaphore('');
 

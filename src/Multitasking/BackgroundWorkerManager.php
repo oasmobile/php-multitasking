@@ -179,7 +179,7 @@ class BackgroundWorkerManager implements EventDispatcherInterface
         }
         elseif ($pid == 0) {
             // in child process
-            $ret = call_user_func($worker, $info);
+            $ret = $worker($info);
             if (!is_int($ret)) {
                 $ret = 0;
             }

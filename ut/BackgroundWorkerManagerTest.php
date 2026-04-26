@@ -12,7 +12,7 @@ use Oasis\Mlib\Multitasking\WorkerManagerCompletedEvent;
  */
 class BackgroundWorkerManagerTest extends \PHPUnit\Framework\TestCase
 {
-    public function testNormalRun()
+    public function testNormalRun(): void
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'multitasking-ut-');
         mdebug("Temp file: %s", $tempFile);
@@ -34,7 +34,7 @@ class BackgroundWorkerManagerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('abcd', $written);
     }
     
-    public function testRunWithMultipleWorkers()
+    public function testRunWithMultipleWorkers(): void
     {
         $num  = 10;
         $size = 5;
@@ -63,7 +63,7 @@ class BackgroundWorkerManagerTest extends \PHPUnit\Framework\TestCase
         }
     }
     
-    public function testEventDispatchedByFinishedWorker()
+    public function testEventDispatchedByFinishedWorker(): void
     {
         $runner = new BackgroundWorkerManager();
         $ids    = $runner->addWorker(
