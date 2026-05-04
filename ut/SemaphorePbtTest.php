@@ -10,16 +10,6 @@ class SemaphorePbtTest extends \PHPUnit\Framework\TestCase
 
     protected Semaphore $sem;
 
-    /**
-     * Override eris TestTrait method — PHPUnit 11 removed getAnnotations()
-     * and PHPUnit\Util\Test::parseTestMethodAnnotations(). We don't use
-     * eris-specific annotations, so returning an empty array is safe.
-     */
-    public function getTestCaseAnnotations(): array
-    {
-        return [];
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
