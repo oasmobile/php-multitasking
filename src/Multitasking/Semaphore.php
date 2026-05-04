@@ -16,11 +16,6 @@ class Semaphore
     protected readonly int $key;
     protected \SysvSemaphore|null $sem = null;
 
-    /**
-     * Semaphore constructor.
-     *
-     * @param string $id a string identifying the semaphore
-     */
     public function __construct(string $id, int $maxAcquire = 1)
     {
         $this->id         = $id;
