@@ -8,13 +8,13 @@
 
 | 项目 | 1.x | ^3.0 |
 |------|-----|------|
-| PHP | ≥ 5.6.1 | ≥ 8.2 |
+| PHP | ≥ 5.6.1 | ≥ 8.5 |
 | `ext-pcntl` | 必需 | 必需（不变） |
 | `oasis/event` | ^1.0 | ^3.0 |
 | `oasis/logging` | ^1.0 | ^3.0（经 Monolog 3） |
-| PHPUnit（dev） | ^5.5 | ^11.0 |
+| PHPUnit（dev） | ^5.5 | ^13.0 |
 
-升级前请确认运行环境满足 PHP ≥ 8.2，并且 `oasis/event` ^3.0 和 `oasis/logging` ^3.0 可从 Packagist 解析。
+升级前请确认运行环境满足 PHP ≥ 8.5，并且 `oasis/event` ^3.0 和 `oasis/logging` ^3.0 可从 Packagist 解析。
 
 ---
 
@@ -52,9 +52,9 @@ vendor/bin/phpunit
 
 ## Breaking Changes
 
-### PHP 版本要求提升至 ≥ 8.2
+### PHP 版本要求提升至 ≥ 8.5
 
-1.x 支持 PHP 5.6+，3.0 要求 PHP ≥ 8.2。这是最主要的 breaking change。
+1.x 支持 PHP 5.6+，3.0 要求 PHP ≥ 8.5。这是最主要的 breaking change。
 
 ### 方法签名添加了原生类型声明
 
@@ -180,10 +180,10 @@ actOnKey(string|int $key, callable $callback): mixed
 
 | 维度 | 1.x | 2.0 | 3.0 |
 |------|-----|-----|-----|
-| PHP | ≥ 5.6.1 | ≥ 8.2 | ≥ 8.2 |
+| PHP | ≥ 5.6.1 | ≥ 8.2 | ≥ 8.5 |
 | `oasis/event` | ^1.0 | ^2.0 | ^3.0 |
 | `oasis/logging` | ^1.0 | ^2.0 | ^3.0 |
-| PHPUnit | ^5.5 | ^11.0 | ^11.0 |
+| PHPUnit | ^5.5 | ^11.0 | ^13.0 |
 | 类型声明 | 无 | 全量 | 全量 |
 | `readonly` 属性 | 无 | 有 | 有 |
 | PBT 测试 | 无 | 有（eris） | 有（eris） |
