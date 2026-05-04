@@ -8,7 +8,7 @@
 
 | 项目 | 值 |
 |------|----|
-| 语言 | PHP ≥ 8.2 |
+| 语言 | PHP ≥ 8.5 |
 | 包名 | `oasis/multitasking` |
 | 命名空间 | `Oasis\Mlib\Multitasking` |
 | 自动加载 | PSR-4（`src/` → `Oasis\Mlib\`） |
@@ -16,8 +16,8 @@
 | IPC 原语 | System V（`sem_*` / `msg_*` / `shm_*`） |
 | 事件机制 | `oasis/event ^3.0`（`EventDispatcherInterface` / `EventDispatcherTrait`；锁文件至 `v3.0.0`） |
 | 日志 | `oasis/logging ^3.0`（`LocalFileHandler` 等，经 Monolog 3；全局 `mdebug` / `minfo` / `mnotice` / `mwarning` / `merror`；锁文件至 `v3.0.0`） |
-| 测试 | PHPUnit ^11.0 |
-| PBT | `giorgiosironi/eris ^1.0`（dev 依赖） |
+| 测试 | PHPUnit ^13.0 |
+| PBT | `giorgiosironi/eris ^1.1`（dev 依赖） |
 
 ---
 
@@ -72,9 +72,9 @@ key = hexdec(substr(md5(md5($id) . $salt), 0, 8))
 
 | 项目 | 值 |
 |------|----|
-| 框架 | PHPUnit ^11.0 |
+| 框架 | PHPUnit ^13.0 |
 | 配置 | `phpunit.xml` |
 | 引导 | `ut/bootstrap.php` |
 | 测试目录 | `ut/` |
-| PBT 框架 | `giorgiosironi/eris ^1.0` |
+| PBT 框架 | `giorgiosironi/eris ^1.1` |
 | PBT 覆盖 | IPC 组件（SharedMemory round-trip、MessageQueue round-trip、Semaphore idempotence） |
